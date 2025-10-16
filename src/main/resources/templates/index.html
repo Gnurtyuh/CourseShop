@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danh sách khóa học - 5NT Learning</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #3b82f6, #60a5fa);
+      color: #ffffff;
+      padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 2rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    header .logo img {
+      height: clamp(40px, 5vw, 48px);
+      transition: transform 0.3s ease;
+    }
+
+    header .logo img:hover {
+      transform: scale(1.05);
+    }
+
+    nav {
+      flex-grow: 1;
+      margin-left: clamp(1rem, 2vw, 2rem);
+    }
+
+    .menu-search {
+      display: flex;
+      align-items: center;
+      gap: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .category {
+      position: relative;
+    }
+
+    .category span {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      transition: background 0.3s ease;
+    }
+
+    .category span:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      list-style: none;
+      padding: clamp(0.75rem, 1.5vw, 1rem);
+      display: none;
+      min-width: clamp(200px, 25vw, 240px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .category:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu li {
+      padding: clamp(0.4rem, 1vw, 0.5rem) 0;
+      position: relative;
+    }
+
+    .dropdown-menu li a {
+      text-decoration: none;
+      color: #1a1a1a;
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .dropdown-menu li a:hover {
+      color: #3b82f6;
+    }
+
+    .submenu {
+      list-style: none;
+      padding-left: clamp(0.75rem, 1.5vw, 1rem);
+      margin-top: clamp(0.4rem, 1vw, 0.5rem);
+      display: none;
+      background: #f9fafb;
+      border-left: 3px solid #3b82f6;
+      border-radius: 4px;
+    }
+
+    .dropdown-menu li:hover > .submenu {
+      display: block;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 50px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-box:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .search-box input {
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem);
+      border: none;
+      outline: none;
+      width: clamp(220px, 30vw, 280px);
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+      background: transparent;
+    }
+
+    .search-box button {
+      background: #f97316;
+      border: none;
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1.25rem);
+      color: #ffffff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .search-box button:hover {
+      background: #ea580c;
+    }
+
+    .auth-buttons a {
+      color: #ffffff;
+      margin-left: clamp(0.75rem, 1.5vw, 1rem);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+      padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.75rem, 1.5vw, 1rem);
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .auth-buttons a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-menu {
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.75rem, 1.5vw, 1rem);
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .user-menu:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-menu > span {
+      color: #ffffff;
+      font-weight: 600;
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+    }
+
+    .user-menu ul {
+      display: none;
+      position: absolute;
+      top: clamp(40px, 5vw, 48px);
+      right: 0;
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      list-style: none;
+      padding: clamp(0.75rem, 1.5vw, 1rem) 0;
+      min-width: clamp(180px, 25vw, 200px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 200;
+      animation: slideDown 0.3s ease;
+    }
+
+    .user-menu.active ul {
+      display: block;
+    }
+
+    .user-menu ul li {
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+    }
+
+    .user-menu ul li a {
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .user-menu ul li a:hover {
+      color: #3b82f6;
+    }
+
+    .banner img {
+      width: 100%;
+      max-height: clamp(240px, 25vw, 360px);
+      object-fit: cover;
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+      border-bottom: 4px solid #3b82f6;
+    }
+
+    h2 {
+      margin: clamp(1rem, 2vw, 1.5rem) 0 clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+      color: #1a1a1a;
+      font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+    }
+
+    .course-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(clamp(15rem, 20vw, 18rem), 1fr));
+      gap: clamp(1rem, 2vw, 1rem);
+      padding: 0 clamp(1.5rem, 3vw, 2rem) clamp(2rem, 4vw, 2.5rem) clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .course-item {
+      background: #ffffff;
+      padding: clamp(1rem, 2vw, 1.5rem);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .course-item:hover {
+      transform: translateY(-0.3rem);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-item h3 {
+      margin: 0 0 clamp(0.5rem, 1vw, 0.75rem);
+      font-size: clamp(1rem, 1.2vw, 1.2rem);
+      color: #3b82f6;
+    }
+
+    .course-item p {
+      font-size: clamp(0.85rem, 1.2vw, 0.9rem);
+      color: #4b5563;
+      margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+      flex-grow: 1;
+    }
+
+    .button-group {
+      display: flex;
+      gap: clamp(0.5rem, 1vw, 0.75rem);
+      justify-content: center;
+      margin-top: clamp(0.5rem, 1vw, 0.75rem);
+    }
+
+    .btn-detail, .btn-buy {
+      text-align: center;
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem);
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      font-size: clamp(0.85rem, 1.2vw, 0.9rem);
+      font-weight: 600;
+      transition: background 0.3s ease, opacity 0.3s ease;
+      display: inline-block;
+      min-width: clamp(80px, 10vw, 100px);
+    }
+
+    .btn-detail {
+      background: #3b82f6;
+      color: #ffffff;
+    }
+
+    .btn-buy {
+      background: #22c55e;
+      color: #ffffff;
+    }
+
+    .btn-detail:hover, .btn-buy:hover {
+      opacity: 0.85;
+    }
+
+    #load-more {
+      display: none; /* Ẩn mặc định, hiển thị khi cần */
+      margin: clamp(1rem, 2vw, 1.5rem) auto clamp(2rem, 4vw, 2.5rem);
+      padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+      background: #3b82f6;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 600;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    #load-more:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+
+    footer.footer {
+      background: #111827;
+      color: #d1d5db;
+      padding: clamp(2rem, 4vw, 3rem) clamp(1rem, 2vw, 2rem) clamp(1.5rem, 3vw, 2rem);
+      margin-top: auto;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(220px, 30vw, 260px), 1fr));
+      gap: clamp(1.5rem, 3vw, 2rem);
+      max-width: clamp(1000px, 90vw, 1280px);
+      margin: auto;
+    }
+
+    .footer-column h3 {
+      margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+      font-size: clamp(1.1rem, 2vw, 1.25rem);
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .footer-column p,
+    .footer-column ul li {
+      font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+      color: #d1d5db;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+    }
+
+    .footer-column ul li a {
+      color: #d1d5db;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column ul li a:hover {
+      color: #3b82f6;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+      border-top: 1px solid #374151;
+      padding-top: clamp(1rem, 2vw, 1.5rem);
+      margin-top: clamp(1.5rem, 3vw, 2rem);
+      color: #9ca3af;
+    }
+
+    #notification {
+      position: fixed;
+      top: clamp(4rem, 7vw, 5rem);
+      right: clamp(1rem, 2vw, 1.5rem);
+      background: #22c55e;
+      color: #ffffff;
+      padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.5rem);
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 10000;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    #notification.error {
+      background: #ef4444;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: clamp(0.75rem, 1.5vw, 1rem);
+      }
+
+      .menu-search {
+        flex-direction: column;
+        gap: clamp(0.75rem, 1.5vw, 1rem);
+        width: 100%;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .search-box input {
+        width: 100%;
+      }
+
+      .auth-buttons {
+        display: flex;
+        gap: clamp(0.4rem, 1vw, 0.5rem);
+        margin-top: clamp(0.75rem, 1.5vw, 1rem);
+      }
+
+      .user-menu {
+        margin-top: clamp(0.75rem, 1.5vw, 1rem);
+      }
+
+      .course-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: clamp(1.25rem, 2vw, 1.5rem);
+        margin: clamp(0.75rem, 1.5vw, 1rem) 0 clamp(0.5rem, 1vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+      }
+
+      .btn-detail, .btn-buy {
+        min-width: clamp(70px, 9vw, 80px);
+        padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.75rem, 1.5vw, 1rem);
+        font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+      }
+
+      #load-more {
+        padding: clamp(0.6rem, 1.2vw, 0.75rem) clamp(1.2rem, 2.5vw, 1.5rem);
+        font-size: clamp(0.9rem, 1.3vw, 1rem);
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="logo">
+    <img src="image/logo-removebg-preview.png" alt="5NT Learning Logo" loading="lazy" />
+  </a>
+  <nav>
+    <div class="menu-search">
+      <div class="category">
+        <span>DANH MỤC</span>
+        <ul class="dropdown-menu">
+          <li>
+            <a href="mkt.html">Marketing</a>
+            <ul class="submenu">
+              <li><a href="#">Digital Marketing A-Z</a></li>
+              <li><a href="#">Digital Content Marketing</a></li>
+              <li><a href="#">TikTok Marketing</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="congnghe.html">Công nghệ</a>
+            <ul class="submenu">
+              <li><a href="#">Lập trình Web</a></li>
+              <li><a href="#">Lập trình Java</a></li>
+              <li><a href="#">Phân tích dữ liệu Python</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="ngonngu.html">Ngôn ngữ</a>
+            <ul class="submenu">
+              <li><a href="#">Tiếng Nhật</a></li>
+              <li><a href="#">Tiếng Hàn</a></li>
+              <li><a href="#">Tiếng Anh</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="search-box">
+        <input
+                type="text"
+                placeholder="Tìm kiếm khóa học, giảng viên..."
+                id="search-input"
+        />
+        <button id="search-btn" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="auth-buttons" id="auth-area">
+    <a href="login.html" id="btn-login">Đăng nhập</a>
+    <a href="register.html" id="btn-register">Đăng ký</a>
+  </div>
+  <div class="user-menu" id="user-menu" style="display:none;">
+    <span id="user-name">User</span>
+    <ul>
+      <li><a href="profile.html" id="profile-link">Thông tin cá nhân</a></li>
+      <li><a href="topup.html" id="topup-link">Nạp tiền</a></li>
+      <li><a href="my-courses.html" id="my-courses-link">Khóa học của tôi</a></li>
+      <li><a href="contact.html" id="contact-link">Liên hệ với chúng tôi</a></li>
+      <li><a href="topup-guide.html" id="topup-guide-link">Hướng dẫn nạp tiền</a></li>
+      <li><a href="#" id="logout-btn">Đăng xuất</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="banner">
+  <img
+          src="./image/Banner_Hoc_truc_tuyen_-_mang_lop_ve_nha_ban-01 (1).jpg"
+          alt="Banner"
+          loading="lazy"
+  />
+</section>
+<h1>Khóa Học Mới Nhất</h1>
+<section class="course-section" id="courses-container">
+  <h2>Danh sách khóa học</h2>
+  <div class="course-list" id="course-list"></div>
+  <button id="load-more">Xem thêm</button>
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3>Liên hệ</h3>
+      <p>Địa chỉ: 123 Đường ABC, Quận 1, TP.HCM</p>
+      <p>Email: <a href="mailto:contact@5ntlearning.vn">contact@5ntlearning.vn</a></p>
+      <p>Điện thoại: <a href="tel:0123456789">0123 456 789</a></p>
+    </div>
+    <div class="footer-column">
+      <h3>Liên kết</h3>
+      <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="course.html">Khóa học</a></li>
+        <li><a href="about.html">Giới thiệu</a></li>
+        <li><a href="contact.html">Liên hệ</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h3>Mạng xã hội</h3>
+      <ul>
+        <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+        <li><a href="https://youtube.com" target="_blank">Youtube</a></li>
+        <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 5NT Learning. Đã đăng ký bản quyền.
+  </div>
+</footer>
+
+<div id="notification"></div>
+
+<script src="js/index.js" defer></script>
+
+</body>
+</html>

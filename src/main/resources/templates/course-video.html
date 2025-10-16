@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xem bài giảng - 5NT Learning</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #3b82f6, #60a5fa);
+      color: #ffffff;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    header .logo img {
+      height: 48px;
+      transition: transform 0.3s ease;
+    }
+
+    header .logo img:hover {
+      transform: scale(1.05);
+    }
+
+    nav {
+      flex-grow: 1;
+      margin-left: 2rem;
+    }
+
+    .menu-search {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .category {
+      position: relative;
+    }
+
+    .category span {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      transition: background 0.3s ease;
+    }
+
+    .category span:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      list-style: none;
+      padding: 1rem;
+      display: none;
+      min-width: 240px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .category:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu li {
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .dropdown-menu li a {
+      text-decoration: none;
+      color: #1a1a1a;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .dropdown-menu li a:hover {
+      color: #3b82f6;
+    }
+
+    .submenu {
+      list-style: none;
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+      display: none;
+      background: #f9fafb;
+      border-left: 3px solid #3b82f6;
+      border-radius: 4px;
+    }
+
+    .dropdown-menu li:hover > .submenu {
+      display: block;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 50px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-box:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .search-box input {
+      padding: 0.75rem 1rem;
+      border: none;
+      outline: none;
+      width: 280px;
+      font-size: 0.95rem;
+      background: transparent;
+    }
+
+    .search-box button {
+      background: #f97316;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      color: #ffffff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .search-box button:hover {
+      background: #ea580c;
+    }
+
+    .auth-buttons a {
+      color: #ffffff;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .auth-buttons a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-menu {
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .user-menu img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 0.75rem;
+      object-fit: cover;
+      border: 2px solid #ffffff;
+      transition: transform 0.3s ease;
+    }
+
+    .user-menu img:hover {
+      transform: scale(1.1);
+    }
+
+    .user-menu > span {
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .user-menu ul {
+      display: none;
+      position: absolute;
+      top: 48px;
+      right: 0;
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      list-style: none;
+      padding: 1rem 0;
+      min-width: 200px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 200;
+      animation: slideDown 0.3s ease;
+    }
+
+    .user-menu.active ul {
+      display: block;
+    }
+
+    .user-menu ul li {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .user-menu ul li a {
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .user-menu ul li a:hover {
+      color: #3b82f6;
+    }
+
+    main {
+      max-width: 80rem;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      flex-grow: 1;
+    }
+
+    .course-video-section {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .video-player {
+      flex: 3;
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .video-player h2 {
+      font-size: 1.75rem;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .video-player video {
+      width: 100%;
+      max-height: 400px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .video-player p {
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    .lesson-list {
+      flex: 1;
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .lesson-list h3 {
+      font-size: 1.25rem;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .lesson-list ul {
+      list-style: none;
+    }
+
+    .lesson-list li {
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      transition: background 0.3s ease;
+      cursor: pointer;
+    }
+
+    .lesson-list li:hover {
+      background: #f9fafb;
+    }
+
+    .lesson-list li.active {
+      background: #3b82f6;
+      color: #ffffff;
+    }
+
+    .lesson-list li a {
+      text-decoration: none;
+      color: inherit;
+      font-size: 0.95rem;
+      display: block;
+    }
+
+    footer.footer {
+      background: #111827;
+      color: #d1d5db;
+      padding: 3rem 2rem 2rem;
+      margin-top: auto;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 1280px;
+      margin: auto;
+    }
+
+    .footer-column h3 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .footer-column p,
+    .footer-column ul li {
+      font-size: 0.9rem;
+      color: #d1d5db;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-column ul li a {
+      color: #d1d5db;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column ul li a:hover {
+      color: #3b82f6;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      font-size: 0.9rem;
+      border-top: 1px solid #374151;
+      padding-top: 1.5rem;
+      margin-top: 2rem;
+      color: #9ca3af;
+    }
+
+    #notification {
+      position: fixed;
+      top: 5rem;
+      right: 1.5rem;
+      background: #22c55e;
+      color: #ffffff;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 10000;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    #notification.error {
+      background: #ef4444;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .course-video-section {
+        flex-direction: column;
+      }
+
+      .video-player,
+      .lesson-list {
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+      }
+
+      .menu-search {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .search-box input {
+        width: 100%;
+      }
+
+      .auth-buttons {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .user-menu {
+        margin-top: 1rem;
+      }
+
+      main {
+        margin: 1rem;
+        padding: 0 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .video-player h2 {
+        font-size: 1.5rem;
+      }
+
+      .lesson-list h3 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">
+      <img src="image/logo-removebg-preview.png" alt="5NT Learning Logo" />
+    </a>
+    <nav>
+      <div class="menu-search">
+        <div class="category">
+          <span>DANH MỤC</span>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="mkt.html">Marketing</a>
+              <ul class="submenu">
+                <li><a href="#">Digital Marketing A-Z</a></li>
+                <li><a href="#">Digital Content Marketing</a></li>
+                <li><a href="#">TikTok Marketing</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="congnghe.html">Công nghệ</a>
+              <ul class="submenu">
+                <li><a href="#">Lập trình Web</a></li>
+                <li><a href="#">Lập trình Java</a></li>
+                <li><a href="#">Phân tích dữ liệu Python</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="ngonngu.html">Ngôn ngữ</a>
+              <ul class="submenu">
+                <li><a href="#">Tiếng Nhật</a></li>
+                <li><a href="#">Tiếng Hàn</a></li>
+                <li><a href="#">Tiếng Anh</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="search-box">
+          <input
+            type="text"
+            placeholder="Tìm kiếm khóa học, giảng viên..."
+            id="search-input"
+          />
+          <button id="search-btn" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="auth-buttons" id="auth-buttons">
+      <a href="login.html" id="btn-login">Đăng nhập</a>
+      <a href="register.html" id="btn-register">Đăng ký</a>
+    </div>
+    <div class="user-menu" id="user-menu" style="display:none;">
+      <span id="user-name">User</span>
+      <ul>
+        <li><a href="profile.html" id="profile-link">Thông tin cá nhân</a></li>
+        <li><a href="topup.html" id="topup-link">Nạp tiền</a></li>
+        <li><a href="my-courses.html" id="my-courses-link">Khóa học của tôi</a></li>
+        <li><a href="contact.html" id="contact-link">Liên hệ với chúng tôi</a></li>
+        <li><a href="topup-guide.html" id="topup-guide-link">Hướng dẫn nạp tiền</a></li>
+        <li><a href="#" id="logout-btn">Đăng xuất</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-video-section">
+      <div class="video-player" id="video-player">
+        <h2 id="course-title">Tên khóa học</h2>
+        <video id="course-video" controls>
+          <source src="" type="video/mp4" />
+          Trình duyệt của bạn không hỗ trợ phát video.
+        </video>
+        <p id="course-description">Mô tả khóa học</p>
+      </div>
+      <div class="lesson-list" id="lesson-list">
+        <h3>Danh sách bài giảng</h3>
+        <ul id="lessons"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>Về 5NT Learning</h3>
+        <p>Nền tảng học trực tuyến cung cấp các khóa học chất lượng, giúp bạn phát triển kỹ năng và nâng cao sự nghiệp.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Liên kết nhanh</h3>
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="courses.html">Khóa học</a></li>
+          <li><a href="about.html">Giới thiệu</a></li>
+          <li><a href="contact.html">Liên hệ</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Thông tin liên hệ</h3>
+        <p>Email: <a href="mailto:support@5ntlearning.vn">support@5ntlearning.vn</a></p>
+        <p>Hotline: <a href="tel:0123456789">0123 456 789</a></p>
+        <p>Địa chỉ: Số 10, Đường Lập Trình, Quận Code, Hà Nội</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 5NT Learning. Đã đăng ký bản quyền.</p>
+    </div>
+  </footer>
+
+  <div id="notification"></div>
+
+  <script src="js/course-video.js"></script>
+</body>
+</html>

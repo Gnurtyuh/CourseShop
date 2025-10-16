@@ -1,0 +1,26 @@
+spring:
+  application:
+    name:
+      CourseShop
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Course
+    username: postgres
+    password: 12345678
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  security:
+    user:
+      name: user
+      password: secret123
+server:
+  port: 8080
+  servlet:
+    context-path: /CourseShop
+jwt:
+  signerKey: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
+  valid-duration: 7200 # in second
+  refreshable-duration: 72000 # in seconds
+
+

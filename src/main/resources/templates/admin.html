@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - 5NT Learning</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1a1a1a;
+      line-height: 1.6;
+      display: flex;
+    }
+
+    .admin-container {
+      display: flex;
+      width: 100%;
+    }
+
+    .sidebar {
+      width: 20%;
+      background: #111827;
+      color: #d1d5db;
+      padding: 1.5rem;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+    }
+
+    .sidebar-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-nav ul {
+      list-style: none;
+    }
+
+    .sidebar-nav li {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar-nav li:hover {
+      background: #1f2a44;
+    }
+
+    .sidebar-nav li.active {
+      background: #3b82f6;
+      color: #ffffff;
+    }
+
+    .sidebar-nav li i {
+      margin-right: 0.75rem;
+    }
+
+    .sidebar-nav li#logout-btn {
+      margin-top: 2rem;
+      color: #ef4444;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 2%;
+      max-width: 80%;
+      margin: 0 auto;
+    }
+
+    .content-section {
+      display: none;
+      background: #ffffff;
+      padding: 2%;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      color: #3b82f6;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-item {
+      background: #f9fafb;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-4px);
+    }
+
+    .stat-item h3 {
+      font-size: 1.5rem;
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+
+    .stat-item p {
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #1a1a1a;
+    }
+
+    form input,
+    form textarea,
+    form select {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: #f9fafb;
+      transition: border-color 0.3s ease;
+    }
+
+    form input:focus,
+    form textarea:focus,
+    form select:focus {
+      border-color: #3b82f6;
+      outline: none;
+    }
+
+    .btn-submit {
+      background: #22c55e;
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      background: #16a34a;
+      transform: translateY(-2px);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      font-size: 0.95rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f3f4f6;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    tr:hover {
+      background: #f9fafb;
+    }
+
+    .btn-edit, .btn-delete, .btn-approve, .btn-reject {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-edit { background: #3b82f6; }
+    .btn-edit:hover { background: #2563eb; }
+    .btn-delete { background: #ef4444; }
+    .btn-delete:hover { background: #dc2626; }
+    .btn-approve { background: #22c55e; }
+    .btn-approve:hover { background: #16a34a; }
+    .btn-reject { background: #ef4444; }
+    .btn-reject:hover { background: #dc2626; }
+
+    #notification {
+      position: fixed;
+      top: 2%;
+      right: 2%;
+      background: #22c55e;
+      color: #ffffff;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 10000;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    #notification.error {
+      background: #ef4444;
+    }
+
+    @media (max-width: 768px) {
+      .admin-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+      }
+
+      .sidebar-nav li {
+        padding: 0.5rem;
+      }
+
+      .main-content {
+        padding: 1rem;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: 0.9rem;
+      }
+
+      th, td {
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Admin Panel</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li data-section="dashboard" class="active">
+            <i class="fas fa-home"></i> Dashboard
+          </li>
+          <li data-section="create-course">
+            <i class="fas fa-plus-circle"></i> Tạo khóa học
+          </li>
+          <li data-section="manage-courses">
+            <i class="fas fa-edit"></i> Quản lý chi tiết
+          </li>
+          <li data-section="manage-users">
+            <i class="fas fa-users"></i> Quản lý học viên
+          </li>
+          <li data-section="track-topup">
+            <i class="fas fa-wallet"></i> Theo dõi nạp tiền
+          </li>
+          <li data-section="statistics">
+            <i class="fas fa-chart-bar"></i> Thống kê
+          </li>
+          <li data-section="statistics">
+            <i class="fas fa-chart-bar"></i>  Báo cáo
+          </li>
+          <li id="logout-btn">
+            <i class="fas fa-sign-out"></i> Đăng xuất
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <section id="dashboard" class="content-section active">
+        <h1>Dashboard</h1>
+        <p>Chào mừng đến với trang quản trị!</p>
+        <div class="stats">
+          <div class="stat-item">
+            <h3 id="total-users">0</h3>
+            <p>Tổng số học viên</p>
+          </div>
+          <div class="stat-item">
+            <h3 id="total-revenue">0 VNĐ</h3>
+            <p>Doanh thu</p>
+          </div>
+          <div class="stat-item">
+            <h3 id="top-course">Chưa có dữ liệu</h3>
+            <p>Khóa học được mua nhiều nhất</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="create-course" class="content-section">
+        <h1>Tạo khóa học mới</h1>
+        <form id="create-course-form">
+          <label for="title">Tiêu đề khóa học</label>
+          <input type="text" id="title" name="title" required />
+          <label for="description">Mô tả chi tiết</label>
+          <textarea id="description" name="description" rows="4" required></textarea>
+          <label for="description">Thông tin khóa học</label>
+          <select>
+            <option>
+              hà nội
+            </option>
+            <option>
+              Hải Phòng
+            </option>
+          </select>
+          <textarea id="description" name="description" rows="4" required></textarea>
+          <label for="price">Giá tiền (VNĐ)</label>
+          <input type="number" id="price" name="price" min="0" required />
+          <button type="submit" class="btn-submit">Tạo khóa học</button>
+          <button type="submit" class="btn-submit">Thêm</button>
+        </form>
+
+        <div class="chapter-management">
+          <h2>Quản lý chương học</h2>
+          <form id="create-chapter-form">
+            <label for="course-select">Chọn khóa học</label>
+            <select id="course-select" name="course" required>
+              <option value="">Chọn khóa học</option>
+            </select>
+            <label for="chapter-title">Tiêu đề chương</label>
+            <input type="text" id="chapter-title" name="title" required />
+            <label for="chapter-order">Thứ tự</label>
+            <input type="number" id="chapter-order" name="order" min="1" required />
+            <button type="submit" class="btn-submit">Tạo chương</button>
+          </form>
+          <table id="chapters-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tiêu đề</th>
+                <th>Thứ tự</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Chapters will load here -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="lesson-management">
+          <h2>Quản lý danh sách bài học</h2>
+          <form id="create-lesson-form">
+            <label for="chapter-select">Chọn chương</label>
+            <select id="chapter-select" name="chapter" required>
+              <option value="">Chọn chương</option>
+            </select>
+            <label for="lesson-title">Tiêu đề bài học</label>
+            <input type="text" id="lesson-title" name="title" required />
+            <label for="lesson-content">Nội dung</label>
+            <input type="text" id="lesson-content" name="" required />
+            <label for="lesson-video">Video URL</label>
+            <input type="text" id="lesson-video" name="video_url" />
+            <label for="lesson-order">Thứ tự</label>
+            <input
+              type="number"
+              id="lesson-order"
+              name="order"
+              min="1"
+              required
+            />
+            <button type="submit" class="btn-submit">Tạo bài học</button>
+          </form>
+        </div>
+<!--          <div class="lesson-management">-->
+<!--              <h2>Quản lý danh sách bài học</h2>-->
+<!--              <form id="createLessonForm">-->
+<!--                <label for="chapter-select">Chọn chương</label>-->
+<!--                <select id="chapterSelect" name="chapter" required>-->
+<!--                  <option value="">Chọn chương</option>-->
+<!--                </select>-->
+<!--                <label for="folder-select">Chọn thư mục</label>-->
+<!--                <input-->
+<!--                        type="file"-->
+<!--                        id="folder-input"-->
+<!--                        webkitdirectory-->
+<!--                        directory-->
+<!--                        style="display: none"-->
+<!--                />-->
+<!--                <select id="folder-select" name="folder" required>-->
+<!--                  <option value="">Chọn thư mục</option>-->
+<!--                </select>-->
+<!--                <button type="submit" class="btn-submit">Tạo bài học</button>-->
+<!--              </form>-->
+<!--          </div>-->
+          <table id="lessons-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tiêu đề</th>
+                <th>Nội dung</th>
+                <th>Video URL</th>
+                <th>Thứ tự</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Lessons will load here -->
+            </tbody>
+          </table>
+
+      </section>
+
+      <section id="manage-courses" class="content-section">
+        <h1>Quản lý khóa học</h1>
+        <table id="courses-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tiêu đề</th>
+              <th>Giá tiền (VNĐ)</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Danh sách khóa học sẽ load ở đây -->
+          </tbody>
+        </table>
+      </section>
+
+      <section id="manage-users" class="content-section">
+        <h1>Quản lý học viên</h1>
+        <table id="users-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tên đăng nhập</th>
+              <th>Email</th>
+              <th>Vai trò</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Danh sách người dùng sẽ load ở đây -->
+          </tbody>
+        </table>
+      </section>
+
+      <section id="track-topup" class="content-section">
+        <h1>Theo dõi nạp tiền</h1>
+        <table id="topup-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Mã giao dịch</th>
+              <th>User ID</th>
+              <th>Tên người dùng</th>
+              <th>Số tiền (VNĐ)</th>
+              <th>Trạng thái</th>
+              <th>Ngày nạp</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dữ liệu theo dõi nạp tiền sẽ load ở đây -->
+          </tbody>
+        </table>
+      </section>
+
+      <section id="statistics" class="content-section">
+        <h1>Thống kê</h1>
+        <p>Biểu đồ thống kê số lượng người dùng và doanh thu theo tháng:</p>
+        <canvas id="statisticsChart" width="700" height="400"></canvas>
+      </section>
+    </main>
+  </div>
+
+  <div id="notification"></div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

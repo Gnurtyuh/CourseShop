@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đăng nhập Quản trị viên</title>
+  <link rel="stylesheet" href="css/loginregis.css" />
+</head>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f2f5;
+}
+.container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+.error-message {
+  margin-bottom: 10px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+button:hover:not(:disabled) {
+  background-color: #218838;
+}
+p {
+  margin-top: 15px;
+}
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+</style>
+<body>
+  <div class="container">
+    <h2>Đăng nhập Quản trị viên</h2>
+    <p>Đăng nhập để quản lý khóa học và người dùng.</p>
+    <form id="loginAdminForm">
+      <div class="error-message" id="errorMessage" style="display: none; color: red;"></div>
+      <input type="text" placeholder="Name" id="name" required />
+      <input type="password" placeholder="Mật khẩu" id="password" required />
+      <button type="submit" id="loginBtn">Đăng nhập</button>
+    </form>
+    <p>Đăng nhập với tài khoản người dùng? <a href="login.html">Đăng nhập người dùng</a></p>
+  </div>
+
+  <script src="js/loginadmin.js"></script>
+</body>
+</html>

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hướng dẫn nạp tiền - 5NT Learning</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #3b82f6, #60a5fa);
+      color: #ffffff;
+      padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 2rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    header .logo img {
+      height: clamp(40px, 5vw, 48px);
+      transition: transform 0.3s ease;
+    }
+
+    header .logo img:hover {
+      transform: scale(1.05);
+    }
+
+    nav {
+      flex-grow: 1;
+      margin-left: clamp(1rem, 2vw, 2rem);
+    }
+
+    .menu-search {
+      display: flex;
+      align-items: center;
+      gap: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .category {
+      position: relative;
+    }
+
+    .category span {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      transition: background 0.3s ease;
+    }
+
+    .category span:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      list-style: none;
+      padding: clamp(0.75rem, 1.5vw, 1rem);
+      display: none;
+      min-width: clamp(200px, 25vw, 240px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .category:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu li {
+      padding: clamp(0.4rem, 1vw, 0.5rem) 0;
+      position: relative;
+    }
+
+    .dropdown-menu li a {
+      text-decoration: none;
+      color: #1a1a1a;
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .dropdown-menu li a:hover {
+      color: #3b82f6;
+    }
+
+    .submenu {
+      list-style: none;
+      padding-left: clamp(0.75rem, 1.5vw, 1rem);
+      margin-top: clamp(0.4rem, 1vw, 0.5rem);
+      display: none;
+      background: #f9fafb;
+      border-left: 3px solid #3b82f6;
+      border-radius: 4px;
+    }
+
+    .dropdown-menu li:hover > .submenu {
+      display: block;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 50px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-box:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .search-box input {
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem);
+      border: none;
+      outline: none;
+      width: clamp(220px, 30vw, 280px);
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+      background: transparent;
+    }
+
+    .search-box button {
+      background: #f97316;
+      border: none;
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1.25rem);
+      color: #ffffff;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .search-box button:hover {
+      background: #ea580c;
+    }
+
+    .auth-buttons a {
+      color: #ffffff;
+      margin-left: clamp(0.75rem, 1.5vw, 1rem);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+      padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.75rem, 1.5vw, 1rem);
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .auth-buttons a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-menu {
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.75rem, 1.5vw, 1rem);
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .user-menu:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-menu > span {
+      color: #ffffff;
+      font-weight: 600;
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+    }
+
+    .user-menu ul {
+      display: none;
+      position: absolute;
+      top: clamp(40px, 5vw, 48px);
+      right: 0;
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      list-style: none;
+      padding: clamp(0.75rem, 1.5vw, 1rem) 0;
+      min-width: clamp(180px, 25vw, 200px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 200;
+      animation: slideDown 0.3s ease;
+    }
+
+    .user-menu.active ul {
+      display: block;
+    }
+
+    .user-menu ul li {
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+    }
+
+    .user-menu ul li a {
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .user-menu ul li a:hover {
+      color: #3b82f6;
+    }
+
+    main {
+      max-width: clamp(48rem, 80vw, 64rem);
+      margin: clamp(1.5rem, 3vw, 2rem) auto;
+      padding: clamp(1.5rem, 3vw, 2rem);
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .topup-guide-section h1 {
+      font-size: clamp(1.75rem, 3vw, 2rem);
+      color: #3b82f6;
+      font-weight: 700;
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .topup-guide-section h2 {
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      color: #1a1a1a;
+      font-weight: 600;
+      margin: clamp(1rem, 2vw, 1.5rem) 0 clamp(0.75rem, 1.5vw, 1rem);
+    }
+
+    .topup-guide-section p {
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      color: #4b5563;
+      margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+    }
+
+    .topup-guide-section ol {
+      padding-left: clamp(1rem, 2vw, 1.5rem);
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .topup-guide-section li {
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      color: #4b5563;
+      margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+    }
+
+    #qr-code {
+      display: block;
+      margin: clamp(1rem, 2vw, 1.5rem) auto;
+      max-width: clamp(160px, 25vw, 200px);
+    }
+
+    .bank-info {
+      background: #f9fafb;
+      padding: clamp(1rem, 2vw, 1.5rem);
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .bank-info p {
+      font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+    }
+
+    .bank-info strong {
+      color: #1a1a1a;
+    }
+
+    #btn-topup-now {
+      background: #22c55e;
+      color: #ffffff;
+      border: none;
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(1rem, 2vw, 1.5rem);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      display: inline-block;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    #btn-topup-now:hover {
+      background: #16a34a;
+      transform: translateY(-2px);
+    }
+
+    footer.footer {
+      background: #111827;
+      color: #d1d5db;
+      padding: clamp(2rem, 4vw, 3rem) clamp(1rem, 2vw, 2rem) clamp(1.5rem, 3vw, 2rem);
+      margin-top: auto;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(220px, 30vw, 260px), 1fr));
+      gap: clamp(1.5rem, 3vw, 2rem);
+      max-width: clamp(1000px, 90vw, 1280px);
+      margin: auto;
+    }
+
+    .footer-column h3 {
+      margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+      font-size: clamp(1.1rem, 2vw, 1.25rem);
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .footer-column p,
+    .footer-column ul li {
+      font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+      color: #d1d5db;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+    }
+
+    .footer-column ul li a {
+      color: #d1d5db;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column ul li a:hover {
+      color: #3b82f6;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+      border-top: 1px solid #374151;
+      padding-top: clamp(1rem, 2vw, 1.5rem);
+      margin-top: clamp(1.5rem, 3vw, 2rem);
+      color: #9ca3af;
+    }
+
+    #notification {
+      position: fixed;
+      top: clamp(4rem, 7vw, 5rem);
+      right: clamp(1rem, 2vw, 1.5rem);
+      background: #22c55e;
+      color: #ffffff;
+      padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.5rem);
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 10000;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    #notification.error {
+      background: #ef4444;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: clamp(0.75rem, 1.5vw, 1rem);
+      }
+
+      .menu-search {
+        flex-direction: column;
+        gap: clamp(0.75rem, 1.5vw, 1rem);
+        width: 100%;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .search-box input {
+        width: 100%;
+      }
+
+      .auth-buttons {
+        display: flex;
+        gap: clamp(0.4rem, 1vw, 0.5rem);
+        margin-top: clamp(0.75rem, 1.5vw, 1rem);
+      }
+
+      .user-menu {
+        margin-top: clamp(0.75rem, 1.5vw, 1rem);
+      }
+
+      main {
+        margin: clamp(0.75rem, 1.5vw, 1rem);
+        padding: clamp(1rem, 2vw, 1.5rem);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .topup-guide-section h1 {
+        font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      }
+
+      .topup-guide-section h2 {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+      }
+
+      #btn-topup-now {
+        padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.75rem, 1.5vw, 1rem);
+        font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">
+      <img src="image/logo-removebg-preview.png" alt="5NT Learning Logo" loading="lazy" />
+    </a>
+    <nav>
+      <div class="menu-search">
+        <div class="category">
+          <span>DANH MỤC</span>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="mkt.html">Marketing</a>
+              <ul class="submenu">
+                <li><a href="#">Digital Marketing A-Z</a></li>
+                <li><a href="#">Digital Content Marketing</a></li>
+                <li><a href="#">TikTok Marketing</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="congnghe.html">Công nghệ</a>
+              <ul class="submenu">
+                <li><a href="#">Lập trình Web</a></li>
+                <li><a href="#">Lập trình Java</a></li>
+                <li><a href="#">Phân tích dữ liệu Python</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="ngonngu.html">Ngôn ngữ</a>
+              <ul class="submenu">
+                <li><a href="#">Tiếng Nhật</a></li>
+                <li><a href="#">Tiếng Hàn</a></li>
+                <li><a href="#">Tiếng Anh</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="search-box">
+          <input
+            type="text"
+            placeholder="Tìm kiếm khóa học, giảng viên..."
+            id="search-input"
+          />
+          <button id="search-btn" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="auth-buttons" id="auth-buttons">
+      <a href="login.html" id="btn-login">Đăng nhập</a>
+      <a href="register.html" id="btn-register">Đăng ký</a>
+    </div>
+    <div class="user-menu" id="user-menu" style="display:none;">
+      <span id="user-name">User</span>
+      <ul>
+        <li><a href="profile.html" id="profile-link">Thông tin cá nhân</a></li>
+        <li><a href="topup.html" id="topup-link">Nạp tiền</a></li>
+        <li><a href="my-courses.html" id="my-courses-link">Khóa học của tôi</a></li>
+        <li><a href="contact.html" id="contact-link">Liên hệ với chúng tôi</a></li>
+        <li><a href="topup-guide.html" id="topup-guide-link">Hướng dẫn nạp tiền</a></li>
+        <li><a href="#" id="logout-btn">Đăng xuất</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="topup-guide-section">
+      <h1>Hướng dẫn nạp tiền</h1>
+      <p>Để nạp tiền vào tài khoản 5NT Learning, vui lòng làm theo các bước dưới đây. Sau khi nạp tiền thành công, bạn có thể sử dụng số dư để mua các khóa học yêu thích.</p>
+
+      <h2>Các bước nạp tiền</h2>
+      <ol>
+        <li>Đăng nhập vào tài khoản 5NT Learning của bạn.</li>
+        <li>Truy cập trang <a href="topup.html">Nạp tiền</a> từ menu tài khoản.</li>
+        <li>Nhập số tiền cần nạp và chọn phương thức thanh toán (QR code hoặc chuyển khoản ngân hàng).</li>
+        <li>Quét mã QR hoặc chuyển khoản theo thông tin cung cấp.</li>
+        <li>Nhập mã giao dịch (nếu có) và xác nhận nạp tiền.</li>
+        <li>Chờ hệ thống xác nhận, số dư sẽ được cập nhật trong vòng 5-10 phút.</li>
+      </ol>
+
+      <h2>Thông tin thanh toán</h2>
+      <p>Để nạp tiền, bạn có thể quét mã QR dưới đây hoặc chuyển khoản trực tiếp:</p>
+      <canvas id="qr-code"></canvas>
+      <div class="bank-info">
+        <p><strong>Ngân hàng:</strong> Ngân hàng TMCP Công Thương Việt Nam (VietinBank)</p>
+        <p><strong>Chủ tài khoản:</strong> Công ty TNHH 5NT Learning</p>
+        <p><strong>Số tài khoản:</strong> 1234567890123</p>
+        <p><strong>Chi nhánh:</strong> Hà Nội</p>
+        <p><strong>Nội dung chuyển khoản:</strong> Nap tien [Tên tài khoản] [Số tiền]</p>
+      </div>
+
+      <h2>Lưu ý</h2>
+      <p>
+        - Vui lòng kiểm tra kỹ thông tin trước khi chuyển khoản.<br>
+        - Nếu gặp vấn đề, liên hệ hỗ trợ qua email <a href="mailto:support@5ntlearning.vn">support@5ntlearning.vn</a> hoặc hotline <a href="tel:0123456789">0123 456 789</a>.<br>
+        - Số dư sẽ được cập nhật sau khi hệ thống xác nhận giao dịch.
+      </p>
+
+      <button id="btn-topup-now">Nạp tiền ngay</button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>Về 5NT Learning</h3>
+        <p>Nền tảng học trực tuyến cung cấp các khóa học chất lượng, giúp bạn phát triển kỹ năng và nâng cao sự nghiệp.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Liên kết nhanh</h3>
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="courses.html">Khóa học</a></li>
+          <li><a href="about.html">Giới thiệu</a></li>
+          <li><a href="contact.html">Liên hệ</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Thông tin liên hệ</h3>
+        <p>Email: <a href="mailto:support@5ntlearning.vn">support@5ntlearning.vn</a></p>
+        <p>Hotline: <a href="tel:0123456789">0123 456 789</a></p>
+        <p>Địa chỉ: Số 10, Đường Lập Trình, Quận Code, Hà Nội</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 5NT Learning. Đã đăng ký bản quyền.</p>
+    </div>
+  </footer>
+
+  <div id="notification"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Lấy các phần tử DOM
+      const userMenu = document.getElementById("user-menu");
+      const authButtons = document.getElementById("auth-buttons");
+      const menuName = document.getElementById("user-name");
+      const qrCodeCanvas = document.getElementById("qr-code");
+      const btnTopupNow = document.getElementById("btn-topup-now");
+      const notification = document.getElementById("notification");
+      const logoutBtn = document.getElementById("logout-btn");
+      const myCoursesLink = document.getElementById("my-courses-link");
+      const profileLink = document.getElementById("profile-link");
+      const topupLink = document.getElementById("topup-link");
+      const contactLink = document.getElementById("contact-link");
+      const topupGuideLink = document.getElementById("topup-guide-link");
+
+      // Hàm hiển thị thông báo
+      function showNotification(message, isError = false) {
+        if (!notification) return console.error("Notification element not found");
+        notification.textContent = message;
+        notification.className = isError ? "error" : "";
+        notification.style.display = "block";
+        setTimeout(() => {
+          notification.style.display = "none";
+        }, 3000);
+      }
+
+      // Kiểm tra trạng thái đăng nhập
+      function checkLogin() {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+          // Đã đăng nhập: ẩn auth-buttons, hiển thị user-menu
+          if (authButtons) authButtons.style.display = "none";
+          if (userMenu) {
+            userMenu.style.display = "flex";
+            if (menuName) menuName.textContent = user.name || "User";
+          }
+        } else {
+          // Chưa đăng nhập: hiển thị auth-buttons, ẩn user-menu
+          if (authButtons) authButtons.style.display = "flex";
+          if (userMenu) userMenu.style.display = "none";
+        }
+        return user;
+      }
+
+      // Hàm đăng xuất
+      function logout() {
+        localStorage.removeItem("user");
+        showNotification("Bạn đã đăng xuất.");
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
+      }
+
+      // Kiểm tra đăng nhập khi tải trang
+      const user = checkLogin();
+
+      // Toggle menu người dùng
+      if (userMenu) {
+        userMenu.onclick = (e) => {
+          e.stopPropagation();
+          userMenu.classList.toggle("active");
+        };
+      }
+
+      // Đóng menu khi click bên ngoài
+      document.addEventListener("click", (e) => {
+        if (userMenu && !userMenu.contains(e.target)) {
+          userMenu.classList.remove("active");
+        }
+      });
+
+      // Ngăn menu đóng khi click vào menu con
+      if (userMenu) {
+        const userMenuUl = userMenu.querySelector("ul");
+        if (userMenuUl) {
+          userMenuUl.onclick = (e) => {
+            e.stopPropagation();
+          };
+        }
+      }
+
+      // Gắn sự kiện cho các liên kết trong menu
+      if (logoutBtn) {
+        logoutBtn.onclick = (e) => {
+          e.preventDefault();
+          userMenu.classList.remove("active");
+          logout();
+        };
+      }
+
+      if (myCoursesLink) {
+        myCoursesLink.onclick = (e) => {
+          e.preventDefault();
+          userMenu.classList.remove("active");
+          window.location.href = "my-courses.html";
+        };
+      }
+
+      if (profileLink) {
+        profileLink.onclick = (e) => {
+          e.preventDefault();
+          userMenu.classList.remove("active");
+          window.location.href = "profile.html";
+        };
+      }
+
+      if (topupLink) {
+        topupLink.onclick = (e) => {
+          e.preventDefault();
+          userMenu.classList.remove("active");
+          window.location.href = "topup.html";
+        };
+      }
+
+      if (contactLink) {
+        contactLink.onclick = (e) => {
+          e.preventDefault();
+          userMenu.classList.remove("active");
+          window.location.href = "contact.html";
+        };
+      }
+
+      if (topupGuideLink) {
+        topupGuideLink.onclick = (e) => {
+          e.preventDefault();
+          userMenu.classList.remove("active");
+          window.location.href = "topup-guide.html";
+        };
+      }
+
+      // Tạo mã QR
+      if (qrCodeCanvas) {
+        const paymentUrl = "https://payment.example.com/topup?userId=" + (user ? user.email : "guest");
+        QRCode.toCanvas(qrCodeCanvas, paymentUrl, { width: 200 }, function (error) {
+          if (error) {
+            console.error("Lỗi tạo QR Code:", error);
+            showNotification("Không thể tạo mã QR!", true);
+          }
+        });
+      }
+
+      // Xử lý nút Nạp tiền ngay
+      if (btnTopupNow) {
+        btnTopupNow.addEventListener("click", () => {
+          if (!user) {
+            showNotification("Vui lòng đăng nhập để nạp tiền!", true);
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 1500);
+            return;
+          }
+          window.location.href = "topup.html";
+        });
+      }
+    });
+  </script>
+</body>
+</html>
