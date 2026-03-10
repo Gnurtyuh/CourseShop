@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -68,5 +69,44 @@ public class UsersService {
         }
         user.setBalance(user.getBalance().subtract(amount));
         userRepo.save(user);
+    }
+
+    @Transactional
+    public void changePassword(Integer userId, String currentPassword, String newPassword) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+        // Tìm user theo ID
+        Users user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng!"));
+
+        // Kiểm tra mật khẩu hiện tại
+        if (!passwordEncoder.matches(currentPassword, user.getPasswordHash())) {
+            throw new RuntimeException("Mật khẩu hiện tại không đúng!");
+        }
+
+        // Kiểm tra mật khẩu mới có trùng với mật khẩu cũ không
+        if (passwordEncoder.matches(newPassword, user.getPasswordHash())) {
+            throw new RuntimeException("Mật khẩu mới phải khác mật khẩu hiện tại!");
+        }
+
+        // Kiểm tra độ dài mật khẩu mới
+        if (newPassword.length() < 6) {
+            throw new RuntimeException("Mật khẩu mới phải có ít nhất 6 ký tự!");
+        }
+
+        // Mã hóa và lưu mật khẩu mới
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
+        userRepo.save(user);
+    }
+    public Users getUserByUsername(String username) {
+        // Tìm theo email trước
+        Users user = userRepo.findByEmail(username);
+        if (user == null) {
+            // Nếu không tìm thấy theo email, tìm theo name
+            user = userRepo.findUserByName(username);
+        }
+        if (user == null) {
+            throw new RuntimeException("Không tìm thấy người dùng!");
+        }
+        return user;
     }
 }

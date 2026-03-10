@@ -1,0 +1,552 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: clamp(14px, 1.5vw, 18px);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: #f5f7fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #1a1a1a;
+    line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    color: #ffffff;
+    padding: clamp(0.75rem, 1.5vw, 1.5rem) clamp(1rem, 2vw, 2rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+header .logo img {
+    height: clamp(2.5rem, 5vw, 3rem);
+    transition: transform 0.3s ease;
+}
+
+header .logo img:hover {
+    transform: scale(1.05);
+}
+
+nav {
+    flex-grow: 1;
+    margin-left: clamp(1rem, 2vw, 2rem);
+}
+
+.menu-search {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 1.5vw, 1.5rem);
+}
+
+.category {
+    position: relative;
+}
+
+.category span {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.6rem, 1.2vw, 0.75rem);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    transition: background 0.3s ease;
+}
+
+.category span:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    list-style: none;
+    padding: clamp(0.5rem, 1vw, 0.75rem);
+    display: none;
+    min-width: clamp(12rem, 15vw, 15rem);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-0.5rem); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.category:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li {
+    padding: clamp(0.3rem, 0.6vw, 0.4rem) 0;
+    position: relative;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: #1a1a1a;
+    font-size: clamp(0.8rem, 0.9vw, 0.95rem);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.dropdown-menu li a:hover {
+    color: #3b82f6;
+}
+
+.submenu {
+    list-style: none;
+    padding-left: clamp(0.5rem, 1vw, 0.75rem);
+    margin-top: clamp(0.2rem, 0.4vw, 0.3rem);
+    display: none;
+    background: #f9fafb;
+    border-left: 3px solid #3b82f6;
+    border-radius: 4px;
+}
+
+.dropdown-menu li:hover > .submenu {
+    display: block;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+}
+
+.search-box:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.search-box input {
+    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.6rem, 1.2vw, 0.75rem);
+    border: none;
+    outline: none;
+    width: clamp(15rem, 20vw, 17.5rem);
+    font-size: clamp(0.8rem, 0.9vw, 0.95rem);
+    background: transparent;
+}
+
+.search-box button {
+    background: #f97316;
+    border: none;
+    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.6rem, 1.2vw, 0.75rem);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.search-box button:hover {
+    background: #ea580c;
+}
+
+.auth-buttons a {
+    color: #ffffff;
+    margin-left: clamp(0.5rem, 1vw, 0.75rem);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: clamp(0.8rem, 0.9vw, 0.95rem);
+    padding: clamp(0.3rem, 0.6vw, 0.4rem) clamp(0.6rem, 1.2vw, 0.75rem);
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.auth-buttons a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: clamp(0.3rem, 0.6vw, 0.4rem) clamp(0.6rem, 1.2vw, 0.75rem);
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.user-menu:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.user-menu > span {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: clamp(0.8rem, 0.9vw, 0.95rem);
+}
+
+.user-menu ul {
+    display: none;
+    position: absolute;
+    top: clamp(2.5rem, 4vw, 3rem);
+    right: 0;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    list-style: none;
+    padding: clamp(0.5rem, 1vw, 0.75rem) 0;
+    min-width: clamp(10rem, 12vw, 12.5rem);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 200;
+    animation: slideDown 0.3s ease;
+}
+
+.user-menu.active ul {
+    display: block;
+}
+
+.user-menu ul li {
+    padding: clamp(0.4rem, 0.8vw, 0.5rem) clamp(0.8rem, 1.6vw, 1rem);
+    font-size: clamp(0.8rem, 0.9vw, 0.95rem);
+}
+
+.user-menu ul li a {
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.user-menu ul li a:hover {
+    color: #3b82f6;
+}
+
+/* Main Content Styles */
+main {
+    max-width: clamp(50rem, 80vw, 64rem);
+    margin: clamp(1rem, 2vw, 2rem) auto;
+    padding: 0 clamp(1rem, 1.5vw, 2rem);
+    flex: 1;
+    width: 100%;
+}
+
+.my-courses-section {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: clamp(1.5rem, 2.5vw, 2rem);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.my-courses-section h2 {
+    color: #1a1a1a;
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 700;
+    margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
+    padding-bottom: clamp(0.5rem, 1vw, 0.75rem);
+    border-bottom: 2px solid #e5e7eb;
+}
+
+/* Course List Styles */
+.course-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.course-card {
+    background: #f9fafb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+}
+
+.course-card:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    border-color: #3b82f6;
+}
+
+.course-card h3.course-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.2rem;
+    color: #3b82f6;
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: calc(1.2rem * 2.4);
+    line-height: 1.4;
+}
+
+.course-card .course-description {
+    margin: 0 0 1.5rem 0;
+    font-size: 0.95rem;
+    color: #4b5563;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    flex-grow: 1;
+    min-height: calc(0.95rem * 1.5 * 3);
+}
+
+.course-card .button-group {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.course-card .btn-detail {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.75rem 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    flex: 1;
+    transition: all 0.3s ease;
+}
+
+.course-card .btn-detail:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+}
+
+.course-card .btn-watch {
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: 0.75rem 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    flex: 1;
+    transition: all 0.3s ease;
+}
+
+.course-card .btn-watch:hover {
+    background: #16a34a;
+    transform: translateY(-2px);
+}
+
+/* No Courses Message */
+#no-courses {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #f9fafb;
+    border-radius: 12px;
+    border: 2px dashed #e5e7eb;
+}
+
+#no-courses p {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+#no-courses .browse-courses {
+    display: inline-block;
+    background: #3b82f6;
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+#no-courses .browse-courses:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+}
+
+/* Footer Styles */
+footer.footer {
+    background: #111827;
+    color: #d1d5db;
+    padding: clamp(1.5rem, 2vw, 3rem) clamp(1rem, 1.5vw, 2rem) clamp(0.75rem, 1.5vw, 1rem);
+    margin-top: auto;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(12rem, 15vw, 16.25rem), 1fr));
+    gap: clamp(1rem, 1.5vw, 2rem);
+    max-width: clamp(60rem, 80vw, 80rem);
+    margin: auto;
+}
+
+.footer-column h3 {
+    margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+    font-size: clamp(1rem, 1.2vw, 1.25rem);
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.footer-column p,
+.footer-column ul li {
+    font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+    color: #d1d5db;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: clamp(0.3rem, 0.6vw, 0.5rem);
+}
+
+.footer-column ul li a {
+    color: #d1d5db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #3b82f6;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+    border-top: 1px solid #374151;
+    padding-top: clamp(0.75rem, 1.5vw, 1rem);
+    margin-top: clamp(1rem, 2vw, 1.5rem);
+    color: #9ca3af;
+}
+
+/* Notification Styles */
+#notification {
+    position: fixed;
+    top: clamp(4rem, 5vw, 5rem);
+    right: clamp(1rem, 1.5vw, 1.5rem);
+    background: #22c55e;
+    color: #ffffff;
+    padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem);
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 10000;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+#notification.error {
+    background: #ef4444;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .course-list {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: clamp(0.5rem, 1vw, 0.75rem);
+    }
+
+    .menu-search {
+        flex-direction: column;
+        gap: clamp(0.5rem, 1vw, 0.75rem);
+        width: 100%;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .search-box input {
+        width: 100%;
+    }
+
+    .auth-buttons {
+        display: flex;
+        gap: clamp(0.3rem, 0.6vw, 0.5rem);
+        margin-top: clamp(0.5rem, 1vw, 0.75rem);
+    }
+
+    .user-menu {
+        margin-top: clamp(0.5rem, 1vw, 0.75rem);
+    }
+
+    main {
+        margin: clamp(0.75rem, 1.5vw, 1rem);
+        padding: 0 clamp(0.75rem, 1.5vw, 1rem);
+    }
+
+    .course-list {
+        grid-template-columns: 1fr;
+    }
+
+    .course-card {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .my-courses-section {
+        padding: 1rem;
+    }
+
+    .course-card h3.course-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .course-card .course-description {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .course-card .button-group {
+        gap: 0.5rem;
+    }
+
+    .course-card .btn-detail,
+    .course-card .btn-watch {
+        padding: 0.6rem 0;
+        font-size: 0.9rem;
+    }
+
+    #no-courses {
+        padding: 2rem 1rem;
+    }
+
+    #no-courses p {
+        font-size: 1rem;
+    }
+}

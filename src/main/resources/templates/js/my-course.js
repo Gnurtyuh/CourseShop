@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const topupLink = document.getElementById("topup-link");
     const contactLink = document.getElementById("contact-link");
     const topupGuideLink = document.getElementById("topup-guide-link");
+    const searchInput = document.getElementById("search-input");
+    const searchBtn = document.getElementById("search-btn");
+
     function showNotification(message, isError = false) {
         if (!notification) return console.error("Notification element not found");
         notification.textContent = message;
@@ -20,9 +23,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             notification.style.display = "none";
         }, 3000);
     }
-    const token = localStorage.getItem("userToken");
-    async function checkLogin() {
 
+    const token = localStorage.getItem("userToken");
+
+    async function checkLogin() {
         if (!token) {
             redirectToLogin();
             return null;
@@ -73,7 +77,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             return [];
         }
     }
-    if (!await checkLogin()) return;
+
+    // Kiểm tra đăng nhập
+    const loginResult = await checkLogin();
+    if (!loginResult) return;
+
     function logout() {
         localStorage.removeItem("userToken");
         showNotification("Bạn đã đăng xuất.");
@@ -82,7 +90,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         }, 1500);
     }
 
-    function goToCourse(courseId) {
+    function goToCourseDetail(courseId) {
+        window.location.href = `course.html?id=${courseId}`;
+    }
+
+    function goToCourseVideo(courseId) {
         window.location.href = `course-video.html?courseId=${courseId}`;
     }
 
@@ -103,25 +115,53 @@ document.addEventListener("DOMContentLoaded", async () => {
             const card = document.createElement("div");
             card.className = "course-card";
 
-            const image = course.image || "https://via.placeholder.com/280x150?text=" + encodeURIComponent(course.name);
-            const description = course.description || "Khóa học giúp bạn nâng cao kỹ năng.";
+            // Xử lý tiêu đề
+            const title = course.title || "Khóa học";
 
-            card.innerHTML = `
-                <h3>${course.title}</h3>
-                <p>${description}</p>
-              `;
+            // Xử lý mô tả
+            const description = course.description || "Khóa học giúp bạn nâng cao kỹ năng và phát triển bản thân. Nội dung được thiết kế bài bản, dễ hiểu và thực tế.";
 
-            const btn = document.createElement("button");
-            btn.type = "button";
-            btn.textContent = "Xem khóa học";
-            btn.addEventListener("click", () => goToCourse(course.id));
+            // Tạo phần tử h3 cho tiêu đề
+            const titleEl = document.createElement("h3");
+            titleEl.textContent = title;
 
-            card.appendChild(btn);
+            // Tạo phần tử p cho mô tả
+            const descEl = document.createElement("p");
+            descEl.className = "course-description";
+            descEl.textContent = description;
+
+            // Tạo button group
+            const buttonGroup = document.createElement("div");
+            buttonGroup.className = "button-group";
+
+            // Nút xem chi tiết
+            const btnDetail = document.createElement("button");
+            btnDetail.type = "button";
+            btnDetail.className = "btn-detail";
+            btnDetail.innerHTML = '<i class="fa-solid fa-circle-info"></i> Chi tiết';
+            btnDetail.addEventListener("click", () => goToCourseDetail(course.id));
+
+            // Nút xem khóa học
+            const btnWatch = document.createElement("button");
+            btnWatch.type = "button";
+            btnWatch.className = "btn-watch";
+            btnWatch.innerHTML = '<i class="fa-solid fa-play"></i> Học ngay';
+            btnWatch.addEventListener("click", () => goToCourseVideo(course.id));
+
+            // Ghép các nút vào button group
+            buttonGroup.appendChild(btnDetail);
+            buttonGroup.appendChild(btnWatch);
+
+            // Ghép các phần tử vào card
+            card.appendChild(titleEl);
+            card.appendChild(descEl);
+            card.appendChild(buttonGroup);
+
             myCoursesList.appendChild(card);
         });
     }
 
-
+    // Fetch và render khóa học
     const courses = await fetchMyCourses(token);
     renderMyCourses(courses);
 
@@ -146,6 +186,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    // Logout
     if (logoutBtn) {
         logoutBtn.onclick = e => {
             e.preventDefault();
@@ -154,6 +195,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         };
     }
 
+    // Menu links
     if (myCoursesLink) {
         myCoursesLink.onclick = e => {
             e.preventDefault();
@@ -191,6 +233,27 @@ document.addEventListener("DOMContentLoaded", async () => {
             e.preventDefault();
             userMenu.classList.remove("active");
             window.location.href = "topup-guide.html";
+        };
+    }
+
+    // Search functionality
+    if (searchBtn) {
+        searchBtn.onclick = () => {
+            const query = searchInput?.value.trim();
+            if (query) {
+                window.location.href = `index.html?search=${encodeURIComponent(query)}`;
+            }
+        };
+    }
+
+    if (searchInput) {
+        searchInput.onkeydown = (e) => {
+            if (e.key === "Enter") {
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `index.html?search=${encodeURIComponent(query)}`;
+                }
+            }
         };
     }
 });

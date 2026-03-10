@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", async () => {
   const sections = document.querySelectorAll(".content-section");
   const navItems = document.querySelectorAll(".sidebar-nav ul li[data-section]");
@@ -32,9 +31,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       const data = await res.json();
 
       document.getElementById("total-users").textContent = data.totalUsers.toLocaleString();
-      document.getElementById("total-revenue").textContent = 2598000 +"VND";
-      document.getElementById("top-course").textContent = "Đại số tuyến tính";
-
 
     } catch (error) {
       console.error(error);

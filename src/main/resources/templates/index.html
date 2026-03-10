@@ -252,72 +252,70 @@
 
     .course-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(clamp(15rem, 20vw, 18rem), 1fr));
-      gap: clamp(1rem, 2vw, 1rem);
-      padding: 0 clamp(1.5rem, 3vw, 2rem) clamp(2rem, 4vw, 2.5rem) clamp(1.5rem, 3vw, 2rem);
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      padding: 0 2rem 2rem 2rem;
     }
 
-    .course-item {
-      background: #ffffff;
-      padding: clamp(1rem, 2vw, 1.5rem);
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .course-item{
+      background:#ffffff;
+      padding:1.5rem;
+      border-radius:10px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      display:flex;
+      flex-direction:column;
+      min-height:240px;
     }
 
-    .course-item:hover {
-      transform: translateY(-0.3rem);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    .course-item:hover{
+      transform:translateY(-5px);
+      box-shadow:0 6px 16px rgba(0,0,0,0.15);
     }
 
-    .course-item h3 {
-      margin: 0 0 clamp(0.5rem, 1vw, 0.75rem);
-      font-size: clamp(1rem, 1.2vw, 1.2rem);
-      color: #3b82f6;
+    .course-item h3{
+      color:#3b82f6;
+      margin-bottom:10px;
     }
 
-    .course-item p {
-      font-size: clamp(0.85rem, 1.2vw, 0.9rem);
-      color: #4b5563;
-      margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
-      flex-grow: 1;
+    .course-item p{
+      font-size:14px;
+      color:#4b5563;
+      margin-bottom:10px;
+
+      display:-webkit-box;
+      -webkit-line-clamp:3;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
     }
 
-    .button-group {
-      display: flex;
-      gap: clamp(0.5rem, 1vw, 0.75rem);
-      justify-content: center;
-      margin-top: clamp(0.5rem, 1vw, 0.75rem);
+    .button-group{
+      margin-top:auto;
+      display:flex;
+      gap:10px;
+      justify-content:center;
     }
 
-    .btn-detail, .btn-buy {
-      text-align: center;
-      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem);
-      border-radius: 8px;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      font-size: clamp(0.85rem, 1.2vw, 0.9rem);
-      font-weight: 600;
-      transition: background 0.3s ease, opacity 0.3s ease;
-      display: inline-block;
-      min-width: clamp(80px, 10vw, 100px);
+    .btn-detail{
+      background:#3b82f6;
+      color:white;
+      border:none;
+      padding:8px 14px;
+      border-radius:6px;
+      cursor:pointer;
     }
 
-    .btn-detail {
-      background: #3b82f6;
-      color: #ffffff;
+    .btn-buy{
+      background:#22c55e;
+      color:white;
+      border:none;
+      padding:8px 14px;
+      border-radius:6px;
+      cursor:pointer;
     }
 
-    .btn-buy {
-      background: #22c55e;
-      color: #ffffff;
-    }
-
-    .btn-detail:hover, .btn-buy:hover {
-      opacity: 0.85;
+    .btn-detail:hover,
+    .btn-buy:hover{
+      opacity:.85;
     }
 
     #load-more {
