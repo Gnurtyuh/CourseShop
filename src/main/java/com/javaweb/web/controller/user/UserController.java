@@ -18,11 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UsersService usersService;
-    @PostMapping
-    ResponseEntity<String> createUser(@RequestBody Users user) {
-        usersService.userRegister(user);
-        return ResponseEntity.ok("Đăng ký thành công");
-    }
+
     @PutMapping
     ResponseEntity<?> updateUser(@RequestBody Users userUpdate ,@AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();

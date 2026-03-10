@@ -1,5 +1,6 @@
 package com.javaweb.web.controller.pub;
 
+import com.javaweb.web.dto.RegisterRequest;
 import com.javaweb.web.entity.Authentications;
 import com.javaweb.web.entity.Users;
 import com.javaweb.web.service.AuthenticationService;
@@ -30,7 +31,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(result);
     }
     @PostMapping
-    ResponseEntity<String> createUser(@RequestBody Users user) {
+    ResponseEntity<String> createUser(@RequestBody RegisterRequest user) {
         usersService.userRegister(user);
         return ResponseEntity.ok("Đăng ký thành công");
     }

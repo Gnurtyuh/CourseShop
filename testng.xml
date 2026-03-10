@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="CourseShop Registration Test Suite" parallel="methods" thread-count="5">
+
+    <test name="Registration UI Tests">
+        <classes>
+            <class name="com.javaweb.web.tests.RegisterTest"/>
+        </classes>
+    </test>
+
+    <test name="Registration API Tests">
+        <classes>
+            <class name="com.javaweb.web.tests.api.RegisterAPITest"/>
+        </classes>
+    </test>
+
+</suite>

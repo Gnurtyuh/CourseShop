@@ -1,5 +1,6 @@
 package com.javaweb.web.service;
 
+import com.javaweb.web.dto.RegisterRequest;
 import com.javaweb.web.entity.Users;
 import com.javaweb.web.repository.UsersRepo;
 
@@ -19,13 +20,20 @@ public class UsersService {
     @Autowired
     private UsersRepo userRepo;
 
-    public Users userRegister(Users user) {
+    public Users userRegister(RegisterRequest user) {
         if (userRepo.existsByName(user.getName())) {
             return null;
         }
+        if (user.getPassword().length() < 6) {
+            return null;
+        }
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
-        return userRepo.save(user);
+        Users users = new Users();
+        users.setName(user.getName());
+        users.setEmail(user.getEmail());
+        users.setBalance(BigDecimal.valueOf(0));
+        users.setPasswordHash(passwordEncoder.encode(user.getPassword()));
+        return userRepo.save(users);
     }
     public List<Users> getAllUsers() {
         return userRepo.findAll();

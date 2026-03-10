@@ -4,11 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const name = document.getElementById("username").value.trim();
+        const name = document.getElementById("name").value.trim();
         const email = document.getElementById("email").value.trim();
-        const passwordHash = document.getElementById("password").value;
-        const balance = 0;
-        if (!name || !email || !passwordHash) {
+        const password = document.getElementById("password").value;
+        if (!name || !email || !password) {
             alert("Vui lòng điền đầy đủ thông tin.");
             return;
         }
@@ -19,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name, email, passwordHash,balance }),
+                body: JSON.stringify({ name, email, password }),
             });
 
             if (res.ok) {

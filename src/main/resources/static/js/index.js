@@ -98,7 +98,7 @@ function renderCourses(filteredCourses = null) {
     return;
   }
 
-  const categories = [...new Set(data.map(c => c.category || 'Khác'))];
+  const categories = [...new Set(data.map(c => c.category || 'Khoá học'))];
   const user = currentUser || JSON.parse(localStorage.getItem("user"));
 
   categories.forEach(category => {
@@ -112,7 +112,7 @@ function renderCourses(filteredCourses = null) {
     const courseList = document.createElement("div");
     courseList.classList.add("course-list");
 
-    const coursesByCat = data.filter(c => (c.category || 'Khác') === category);
+    const coursesByCat = data.filter(c => (c.category || 'Khoá học') === category);
     let count = showCount[category] || initialShow;
     count = Math.min(count, coursesByCat.length);
 
