@@ -18,8 +18,8 @@ import java.time.Duration;
 public class BaseTest {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected static final String BASE_URL = "http://localhost:63342/CourseShop/web/templates";
-    protected static final String REGISTER_PAGE ="http://localhost:63342/CourseShop/web/templates/register.html?_ijt=bc1f61d0eos5517mbqfjp66ms";
+    protected static final String BASE_URL = "http://localhost:8080/web/templates";
+    protected static final String REGISTER_PAGE ="http://localhost:8080/register";
 
     @BeforeSuite
     public void setupSuite() {

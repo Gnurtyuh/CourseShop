@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hàm fetch danh sách khóa học
     async function fetchMyCourses() {
         try {
-            const myCoursesRes = await fetch("http://localhost:8080/CourseShop/api/users/course/myCourse", {
+            const myCoursesRes = await fetch("http://localhost:8080/api/users/course/myCourse", {
                 headers: {
                     "Authorization": "Bearer " + token,
                 },
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const res = await fetch("http://localhost:8080/CourseShop/api/users/user/me", {
+            const res = await fetch("http://localhost:8080/api/users/user/me", {
                 headers: {
                     "Authorization": "Bearer " + token,
                 },
@@ -335,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Đang xử lý...";
 
-                const response = await fetch(`http://localhost:8080/CourseShop/api/users/user`, {
+                const response = await fetch(`http://localhost:8080/api/users/user`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -416,7 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 submitBtn.disabled = true;
                 submitBtn.textContent = "Đang xử lý...";
 
-                const response = await fetch("http://localhost:8080/CourseShop/api/users/user/change-password", {
+                const response = await fetch("http://localhost:8080/api/users/user/change-password", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

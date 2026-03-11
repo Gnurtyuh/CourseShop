@@ -22,11 +22,13 @@ public class UsersService {
 
     public Users userRegister(RegisterRequest user) {
         if (userRepo.existsByName(user.getName())) {
-            return null;
+            throw new RuntimeException("Tên đã tồn tại");
         }
         if (user.getPassword().length() < 6) {
             return null;
         }
+        if (userRepo.findByEmail(user.getEmail()) != null)
+            throw new RuntimeException("Email đã tồn tại");
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         Users users = new Users();
         users.setName(user.getName());
@@ -107,11 +109,7 @@ public class UsersService {
     }
     public Users getUserByUsername(String username) {
         // Tìm theo email trước
-        Users user = userRepo.findByEmail(username);
-        if (user == null) {
-            // Nếu không tìm thấy theo email, tìm theo name
-            user = userRepo.findUserByName(username);
-        }
+        Users user = userRepo.findUserByName(username);;
         if (user == null) {
             throw new RuntimeException("Không tìm thấy người dùng!");
         }

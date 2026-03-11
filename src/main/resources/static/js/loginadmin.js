@@ -61,7 +61,7 @@ document.getElementById('loginAdminForm').addEventListener('submit', async funct
   loginBtn.textContent = 'Đang đăng nhập...';
 
   try {
-    const response = await fetch('http://localhost:8080/CourseShop/privateAd/AdAuthentication/AdminLogin', {
+    const response = await fetch('http://localhost:8080/privateAd/AdAuthentication/AdminLogin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({name, password})

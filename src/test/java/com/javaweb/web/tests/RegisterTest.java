@@ -210,7 +210,7 @@ public class RegisterTest extends BaseTest {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         String script =
-                "fetch('http://localhost:8080/CourseShop/api/public/auth', {" +
+                "fetch('http://localhost:8080/api/public/auth', {" +
                         "  method: 'POST'," +
                         "  headers: {'Content-Type': 'application/json'}," +
                         "  body: JSON.stringify({name: 'testuser', email: 'test@email.com'})" +

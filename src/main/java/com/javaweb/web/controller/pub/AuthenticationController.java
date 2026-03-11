@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +33,12 @@ public class AuthenticationController {
     }
     @PostMapping
     ResponseEntity<String> createUser(@RequestBody RegisterRequest user) {
+        if (usersService.getUserByUsername(user.getName()) != null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Tên đã tồn tại");
+        }
+        if( usersService.getUserByEmail(user.getEmail()) != null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email đã tồn tại");
+        }
         usersService.userRegister(user);
         return ResponseEntity.ok("Đăng ký thành công");
     }

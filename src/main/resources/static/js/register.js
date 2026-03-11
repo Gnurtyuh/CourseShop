@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const res = await fetch("http://localhost:8080/CourseShop/api/public/auth", {
+            const res = await fetch("http://localhost:8080/api/public/auth", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

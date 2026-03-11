@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!token) return false;
 
     try {
-      const response = await fetch("http://localhost:8080/CourseShop/api/users/course/myCourse", {
+      const response = await fetch("http://localhost:8080/api/users/course/myCourse", {
         headers: { "Authorization": `Bearer ${token}` }
       });
 
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (courseTitle) courseTitle.textContent = "Đang tải thông tin khóa học...";
 
     // Gọi API lấy chi tiết khóa học
-    const resCourse = await fetch(`http://localhost:8080/CourseShop/api/public/courses/${courseId}`);
+    const resCourse = await fetch(`http://localhost:8080/api/public/courses/${courseId}`);
 
     if (!resCourse.ok) {
       throw new Error(`HTTP error! status: ${resCourse.status}`);
@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     courseInfo = await resCourse.json();
 
     // Gọi API lấy danh sách bài học
-    const resLessons = await fetch(`http://localhost:8080/CourseShop/api/public/courseSection/by-course/${courseId}`);
+    const resLessons = await fetch(`http://localhost:8080/api/public/courseSection/by-course/${courseId}`);
 
     if (!resLessons.ok) {
       console.warn("Không thể tải danh sách bài học:", resLessons.status);
@@ -299,7 +299,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             newBtnBuyCourse.style.opacity = "0.7";
 
             // Gọi API mua khóa học
-            const resPurchase = await fetch(`http://localhost:8080/CourseShop/api/users/payment/buy-course?courseId=${courseId}`, {
+            const resPurchase = await fetch(`http://localhost:8080/api/users/payment/buy-course?courseId=${courseId}`, {
               method: "POST",
               headers: {
                 "Authorization": `Bearer ${token}`,

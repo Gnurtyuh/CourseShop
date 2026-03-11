@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function loadStatistics() {
     try {
-      const res = await fetch("http://localhost:8080/CourseShop/api/admin/admin/statistics", {
+      const res = await fetch("http://localhost:8080/api/admin/admin/statistics", {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log(newCourseData);
     console.log("Token:", token);
     try {
-      const response = await fetch("http://localhost:8080/CourseShop/api/admin/courses", {
+      const response = await fetch("http://localhost:8080/api/admin/courses", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tbody = document.querySelector("#courses-table tbody");
     tbody.innerHTML = "";
     try {
-      const response = await fetch("http://localhost:8080/CourseShop/api/admin/courses", {
+      const response = await fetch("http://localhost:8080/api/admin/courses", {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   async function fetchUsers() {
     try {
-      const response = await fetch('http://localhost:8080/CourseShop/api/admin/admin/userAll', {
+      const response = await fetch('http://localhost:8080/api/admin/admin/userAll', {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   async function editCourse(id) {
     try {
-      const responseGet = await fetch(`http://localhost:8080/CourseShop/api/admin/courses/${id}`, {
+      const responseGet = await fetch(`http://localhost:8080/api/admin/courses/${id}`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (newPriceStr === null) return;
       const newPrice = parseInt(newPriceStr);
       if (isNaN(newPrice) || newPrice < 0) return showNotification("Giá tiền không hợp lệ!", true);
-      const responseUpdate = await fetch(`http://localhost:8080/CourseShop/api/admin/courses/${id}`, {
+      const responseUpdate = await fetch(`http://localhost:8080/api/admin/courses/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function deleteCourse(id) {
     if (!confirm("Bạn có chắc muốn xóa khóa học?")) return;
     try {
-      const response = await fetch(`http://localhost:8080/CourseShop/api/admin/courses/${id}`, {
+      const response = await fetch(`http://localhost:8080/api/admin/courses/${id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
       // Gọi 1 API duy nhất (có chứa user lồng trong topup)
-      const res = await fetch("http://localhost:8080/CourseShop/api/admin/payment/history", {
+      const res = await fetch("http://localhost:8080/api/admin/payment/history", {
         headers: {"Authorization": `Bearer ${token}`}
       });
 
@@ -320,7 +320,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   async function updateTopupStatus(id, status) {
     try {
-      const res = await fetch(`http://localhost:8080/CourseShop/api/admin/payment/${id}/status`, {
+      const res = await fetch(`http://localhost:8080/api/admin/payment/${id}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -343,7 +343,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     courseSelect.innerHTML = '<option value="">Chọn khóa học</option>';
 
     try {
-      const response = await fetch("http://localhost:8080/CourseShop/api/admin/courses", {
+      const response = await fetch("http://localhost:8080/api/admin/courses", {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     chapterSelect.innerHTML = '<option value="">Chọn chương</option>';
 
     try {
-      const response = await fetch(`http://localhost:8080/CourseShop/api/admin/courseSection/by-course/${courseId}`, {
+      const response = await fetch(`http://localhost:8080/api/admin/courseSection/by-course/${courseId}`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -396,7 +396,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function loadChapters(courseId) {
     try {
-      const res = await fetch(`http://localhost:8080/CourseShop/api/admin/courseSection/by-course/${courseId}`, {
+      const res = await fetch(`http://localhost:8080/api/admin/courseSection/by-course/${courseId}`, {
         headers: {"Authorization": `Bearer ${token}`}
       });
       if (!res.ok) throw new Error("Lỗi khi tải chương");
@@ -432,7 +432,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function loadLessons(courseId, sectionId) {
     try {
-      const res = await fetch(`http://localhost:8080/CourseShop/api/admin/courseLesson/${sectionId}`, {
+      const res = await fetch(`http://localhost:8080/api/admin/courseLesson/${sectionId}`, {
         headers: {"Authorization": `Bearer ${token}`}
       });
       if (!res.ok) throw new Error("Lỗi khi tải bài học");
@@ -478,7 +478,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!courseId || !title || isNaN(order)) return showNotification("Vui lòng điền đầy đủ thông tin!", true);
 
     try {
-      const res = await fetch(`http://localhost:8080/CourseShop/api/admin/courseSection/by-course/${courseId}`, {
+      const res = await fetch(`http://localhost:8080/api/admin/courseSection/by-course/${courseId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -501,7 +501,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function createLesson(courseId, chapterId, lessonData) {
     try {
-      const res = await fetch(`http://localhost:8080/CourseShop/api/admin/courseLesson/by-course/${chapterId}`, {
+      const res = await fetch(`http://localhost:8080/api/admin/courseLesson/by-course/${chapterId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -551,7 +551,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function editChapter(courseId, id) {
     try {
       // Lấy chapter hiện tại từ API (hoặc cache nếu có)
-      const res = await fetch(`http://localhost:8080/CourseShop/api/admin/courseSection/${id}`, {
+      const res = await fetch(`http://localhost:8080/api/admin/courseSection/${id}`, {
         headers: {"Authorization": `Bearer ${token}`}
       });
       if (!res.ok) throw new Error("Không tìm thấy chương");
@@ -565,7 +565,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const orderNum = parseInt(newOrder);
       if (isNaN(orderNum)) return showNotification("Thứ tự không hợp lệ!", true);
 
-      const updateRes = await fetch(`http://localhost:8080/CourseShop/api/admin/courseSection/${id}`, {
+      const updateRes = await fetch(`http://localhost:8080/api/admin/courseSection/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -590,7 +590,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!confirm("Bạn có chắc muốn xóa chương này? Tất cả bài học trong chương cũng sẽ bị xóa!")) return;
 
     try {
-      const res = await fetch(`http://localhost:8080/CourseShop/api/admin/courseSection/${id}`, {
+      const res = await fetch(`http://localhost:8080/api/admin/courseSection/${id}`, {
         method: "DELETE",
         headers: {"Authorization": `Bearer ${token}`}
       });
@@ -606,7 +606,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function editLesson(courseId, chapterId, lessonId) {
     try {
-      const res = await fetch(`http://localhost:8080/CourseShop/api/admin/courseLesson/lesson/${lessonId}`, {
+      const res = await fetch(`http://localhost:8080/api/admin/courseLesson/lesson/${lessonId}`, {
         headers: {"Authorization": `Bearer ${token}`}
       });
       if (!res.ok) throw new Error("Không tìm thấy bài học");
@@ -623,7 +623,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const orderNum = parseInt(newOrder);
       if (isNaN(orderNum)) return showNotification("Thứ tự không hợp lệ!", true);
 
-      const updateRes = await fetch(`http://localhost:8080/CourseShop/api/admin/courseLesson/lesson/${lessonId}`, {
+      const updateRes = await fetch(`http://localhost:8080/api/admin/courseLesson/lesson/${lessonId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -649,7 +649,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!confirm("Bạn có chắc muốn xóa bài học này?")) return;
 
     try {
-      const res = await fetch(`http://localhost:8080/CourseShop/api/admin/courseLesson/lesson/${lessonId}`, {
+      const res = await fetch(`http://localhost:8080/api/admin/courseLesson/lesson/${lessonId}`, {
         method: "DELETE",
         headers: {"Authorization": `Bearer ${token}`}
       });

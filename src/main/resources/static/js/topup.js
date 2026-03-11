@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
               redirectToLogin();
               return false;
           }
-          const res = await fetch("http://localhost:8080/CourseShop/api/users/user/me", {
+          const res = await fetch("http://localhost:8080/api/users/user/me", {
               headers: {
                   "Authorization": "Bearer " + token,
               },

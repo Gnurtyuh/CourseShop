@@ -3,8 +3,6 @@ package com.javaweb.web.tests.api;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -45,7 +43,7 @@ public class RegisterAPITest {
     @Test(priority = 2)
     public void testRegisterDuplicateUsername() {
         Map<String, Object> user = new HashMap<>();
-        user.put("name", "admin");
+        user.put("name", "Use");
         user.put("email", "new" + UUID.randomUUID() + "@email.com");
         user.put("password", "123456@Abc");
 
@@ -63,7 +61,7 @@ public class RegisterAPITest {
     public void testRegisterDuplicateEmail() {
         Map<String, Object> user = new HashMap<>();
         user.put("name", "newuser" + UUID.randomUUID());
-        user.put("email", "existing@email.com"); // Email đã tồn tại
+        user.put("email", "nkocsoc2004@email.com"); // Email đã tồn tại
         user.put("password", "123456@Abc");
 
         given()

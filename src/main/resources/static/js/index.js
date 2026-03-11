@@ -11,7 +11,7 @@ async function fetchCourses() {
   const token = localStorage.getItem("userToken");
 
   try {
-    const response = await fetch("http://localhost:8080/CourseShop/api/public/courses", {
+    const response = await fetch("http://localhost:8080/api/public/courses", {
       headers: token ? { "Authorization": `Bearer ${token}` } : {}
     });
 
@@ -43,7 +43,7 @@ async function fetchMyCourses() {
   const token = localStorage.getItem("userToken");
 
   try {
-    const response = await fetch("http://localhost:8080/CourseShop/api/users/course/myCourse", {
+    const response = await fetch("http://localhost:8080/api/users/course/myCourse", {
       headers: { "Authorization": `Bearer ${token}` }
     });
 
@@ -64,7 +64,7 @@ async function fetchUserInfo() {
   if (!token) return null;
 
   try {
-    const response = await fetch("http://localhost:8080/CourseShop/api/users/user/me", {
+    const response = await fetch("http://localhost:8080/api/users/user/me", {
       headers: { "Authorization": `Bearer ${token}` }
     });
 
@@ -158,7 +158,7 @@ function renderCourses(filteredCourses = null) {
 
             try {
               const resPurchase = await fetch(
-                  `http://localhost:8080/CourseShop/api/users/payment/buy-course?courseId=${course.id}`,
+                  `http://localhost:8080/api/users/payment/buy-course?courseId=${course.id}`,
                   {
                     method: "POST",
                     headers: {

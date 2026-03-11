@@ -41,7 +41,7 @@
               redirectToLogin();
               return false;
           }
-          const res = await fetch("http://localhost:8080/CourseShop/api/users/user/me", {
+          const res = await fetch("http://localhost:8080/api/users/user/me", {
               headers: {
                   "Authorization": "Bearer " + token,
               },
@@ -171,7 +171,7 @@
              }
              const status = "pending";
              try {
-                 const response = await fetch("http://localhost:8080/CourseShop/api/users/payment/topup", {
+                 const response = await fetch("http://localhost:8080/api/users/payment/topup", {
                      method: "POST",
                      headers: {
                          "Content-Type": "application/json",

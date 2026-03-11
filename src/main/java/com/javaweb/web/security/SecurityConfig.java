@@ -35,7 +35,14 @@ public class SecurityConfig {
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/privateAd/**").permitAll()
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/register",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**",
+                                "/static/css/**",
+                                "/static/js/**",
+                                "/static/images/**",
+                                "/**").permitAll()
                         .requestMatchers("/CourseShop/**").permitAll()
                         .requestMatchers("/api/users/**").hasRole("USER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

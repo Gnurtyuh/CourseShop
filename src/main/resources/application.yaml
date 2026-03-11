@@ -17,8 +17,6 @@ spring:
 
 server:
   port: 8080
-  servlet:
-    context-path: /CourseShop
 jwt:
   signerKey: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
   valid-duration: 7200 # in second

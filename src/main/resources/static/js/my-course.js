@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             return null;
         }
         try {
-            const res = await fetch("http://localhost:8080/CourseShop/api/users/user/me", {
+            const res = await fetch("http://localhost:8080/api/users/user/me", {
                 headers: {
                     Authorization: "Bearer " + token,
                 },
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function fetchMyCourses(token) {
         try {
-            const res = await fetch(`http://localhost:8080/CourseShop/api/users/course/myCourse`, {
+            const res = await fetch(`http://localhost:8080/api/users/course/myCourse`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,

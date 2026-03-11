@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       redirectToLogin();
       return false;
     }
-    const res = await fetch("http://localhost:8080/CourseShop/api/users/user/me", {
+    const res = await fetch("http://localhost:8080/api/users/user/me", {
       headers: {
         "Authorization": "Bearer " + token,
       },
@@ -191,12 +191,12 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadCourseData(courseId) {
     try {
       // 1. Lấy thông tin khóa học
-      const course = await fetchCourse(`http://localhost:8080/CourseShop/api/users/course/me/${courseId}`);
+      const course = await fetchCourse(`http://localhost:8080/api/users/course/me/${courseId}`);
       courseTitle.textContent = course.name;
       courseDescription.textContent = course.description;
 
       // 2. Lấy danh sách sections
-      const sections = await fetchCourse(`http://localhost:8080/CourseShop/api/users/courseSection/by-course/${courseId}`);
+      const sections = await fetchCourse(`http://localhost:8080/api/users/courseSection/by-course/${courseId}`);
 
       if (!sections.length) {
         lessonsList.innerHTML = "<li>Khóa học chưa có chương nào.</li>";
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lessonsList.appendChild(sectionTitle);
 
         // 4. Lấy lessons cho section đó
-        const lessons = await fetchCourse(`http://localhost:8080/CourseShop/api/users/courseLesson/findAll?section_id=${section.id}`);
+        const lessons = await fetchCourse(`http://localhost:8080/api/users/courseLesson/findAll?section_id=${section.id}`);
 
         lessons.forEach((lesson, index) => {
           const lessonItem = document.createElement("li");
