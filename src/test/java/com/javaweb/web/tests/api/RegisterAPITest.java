@@ -125,4 +125,20 @@ public class RegisterAPITest {
                 .statusCode(anyOf(is(401), is(200))) // Không được 500
                 .body(not(containsString("SQL")));
     }
+    @Test(priority = 6)
+    public void testRegisterInvalidName() {
+        Map<String, Object> user = new HashMap<>();
+        user.put("name", "' OR '1'='1");
+        user.put("email", "test@email.com");
+        user.put("password", "123456@Abc");
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(user)
+                .when()
+                .post()
+                .then()
+                .statusCode(anyOf(is(401), is(200))) // Không được 500
+                .body(not(containsString("SQL")));
+    }
 }

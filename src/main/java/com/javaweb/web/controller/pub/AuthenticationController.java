@@ -1,5 +1,6 @@
 package com.javaweb.web.controller.pub;
 
+import com.github.dockerjava.api.exception.BadRequestException;
 import com.javaweb.web.dto.RegisterRequest;
 import com.javaweb.web.entity.Authentications;
 import com.javaweb.web.entity.Users;
@@ -42,7 +43,11 @@ public class AuthenticationController {
         if(user.getPassword() == null ||user.getPassword().length() < 6) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email đã tồn tại");
         }
-        usersService.userRegister(user);
-        return ResponseEntity.ok("Đăng ký thành công");
+        try {
+            usersService.userRegister(user);
+            return ResponseEntity.ok("Đăng ký thành công");
+        } catch (BadRequestException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

@@ -3,7 +3,16 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
   const name = document.getElementById('name').value;
   const password = document.getElementById('password').value;
+  if (/\s/.test(name)) {
+    alert("Tên không được chứa khoảng trắng");
+    return false;
+  }
 
+
+  if (/\s/.test(password)) {
+    alert("Password không được chứa khoảng trắng");
+    return false;
+  }
   try {
     const response = await fetch('http://localhost:8080/api/public/auth/login', {
       method: 'POST',

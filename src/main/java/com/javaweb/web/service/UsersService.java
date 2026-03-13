@@ -17,13 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.springframework.security.config.http.MatcherType.regex;
 
 @Service
 @RequiredArgsConstructor
 public class UsersService {
 
     private final UsersRepo userRepo;
-
+    private static final String regex = "^(.+)@(.+)$";
     @Transactional
     public Users userRegister(RegisterRequest user) {
         if (userRepo.existsByName(user.getName())) {
@@ -32,8 +36,8 @@ public class UsersService {
         if (userRepo.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Email đã tồn tại");
         }
-        if (isValidEmail(user.getEmail())) {
-            throw new RuntimeException("Định dạng email lỗi");
+        if (!isValidEmail(user.getEmail())) {
+            throw new BadRequestException("Định dạng email bị lỗi");
         }
         if (user.getPassword().length() < 6) {
             throw new BadRequestException("Mật khẩu quá ngắn");
@@ -120,9 +124,10 @@ public class UsersService {
         return userRepo.findUserByName(username);
     }
     public static boolean isValidEmail(String email) {
-        // create the EmailValidator instance
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
         EmailValidator validator = EmailValidator.getInstance();
-        // check for valid email addresses using isValid method
-        return validator.isValid(email);
+
+        return validator.isValid(email)||matcher.matches();
     }
 }
