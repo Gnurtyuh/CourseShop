@@ -20,20 +20,20 @@ public class BaseTest {
     protected static final String BASE_URL = "http://localhost:8080/";
     protected static final String REGISTER_PAGE ="http://localhost:8080/register";
 
-    @BeforeMethod
-    public void setup() {
+@BeforeMethod
+public void setup() {
 
-        System.setProperty("webdriver.gecko.driver", "D:\\geckodriver-v0.36.0-win64\\geckodriver.exe");
+    System.setProperty("webdriver.gecko.driver", "D:\\geckodriver-v0.36.0-win64\\geckodriver.exe");
 
-        FirefoxOptions options = new FirefoxOptions();
+    FirefoxOptions options = new FirefoxOptions();
 
-        driver = new FirefoxDriver(options);
+    driver = new FirefoxDriver(options);
 
-        driver.manage().window().maximize();
+    driver.manage().window().maximize();
 
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    }
+}
     protected void step(int number, String message) {
         System.out.println("STEP " + number + ": " + message);
     }

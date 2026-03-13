@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -29,11 +30,25 @@ public class PublicCoursesController {
     @Autowired
     UsersService usersService;
 
+    //testview3
+    @GetMapping("/status500")
+    public ResponseEntity<?> getCourses(){
+        return ResponseEntity.status(500).body("Server error");
+    }
+
+    //testview1
     @GetMapping
     public ResponseEntity<List<Courses>> getAll() {
         List<Courses> courses = courseService.getAllCourses();
         return ResponseEntity.ok(courses);
     }
+
+    @GetMapping("/empty")
+    public ResponseEntity<List<Courses>> getEmptyCourses() {
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+
     @GetMapping("/MyCourse")
     public ResponseEntity<List<Courses>> getMyCourse(@AuthenticationPrincipal UserDetails userDetails) {
         Users user = usersService.getUserByName(userDetails.getUsername());

@@ -30,6 +30,7 @@ public class CoursesController {
     @Autowired
     AccessService accessService;
 
+
     @GetMapping
     public ResponseEntity<List<Courses>> getAll() {
         List<Courses> courses = courseService.getAllCourses();

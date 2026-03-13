@@ -94,7 +94,8 @@ function renderCourses(filteredCourses = null) {
 
   const data = filteredCourses || courses;
   if (!data || data.length === 0) {
-    container.innerHTML = "<p style='text-align: center; padding: 20px;'>Không có khóa học nào.</p>";
+    container.innerHTML =
+      "<p id='no-course-msg' style='text-align: center; padding: 20px;'>Không có khóa học nào.</p>";
     return;
   }
 
