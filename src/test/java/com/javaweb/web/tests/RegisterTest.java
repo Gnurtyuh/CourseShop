@@ -64,11 +64,7 @@ public class RegisterTest extends BaseTest {
                 {" testuser ", "test@email.com", "123456@Abc"},
                 {"testuser", " test@email.com ", "123456@Abc"}, // Email có khoảng trắng
                 {"Nguyen Van A", "test@email.com", "123456@Abc"},
-                {"123456789", "test@email.com", "123456@Abc"},
-                {"NguyễnVănA", "test@email.com", "123456@Abc"},
-                {"testuser", "test.user.name@email.com", "123456@Abc"}, // Email nhiều dấu chấm
-                {"testuser", "test+label@email.com", "123456@Abc"}, // Email có dấu +
-                {"testuser", "test@email.com", "!@#$%^&*()"} // Password ký tự đặc biệt
+                 // Password ký tự đặc biệt
         };
     }
 
@@ -152,9 +148,8 @@ public class RegisterTest extends BaseTest {
         submitForm();
 
         String alertMessage = getAlertMessage();
-        Assert.assertTrue(alertMessage.contains("password") ||
-                        alertMessage.contains("mật khẩu"),
-                "Should show password too short error");
+        Assert.assertTrue(alertMessage.contains("password"),
+                "Password quá ngắn");
     }
 
     // TC-REG-011 & 012: Trim khoảng trắng

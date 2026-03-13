@@ -18,7 +18,7 @@ import java.time.Duration;
 public class BaseTest {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected static final String BASE_URL = "http://localhost:8080/web/templates";
+    protected static final String BASE_URL = "http://localhost:8080/";
     protected static final String REGISTER_PAGE ="http://localhost:8080/register";
 
     @BeforeSuite
@@ -83,7 +83,7 @@ public class BaseTest {
 
     protected boolean isRedirectedToLoginPage() {
         try {
-            wait.until(ExpectedConditions.urlContains("login.html"));
+            wait.until(ExpectedConditions.urlContains("login"));
             return true;
         } catch (Exception e) {
             return false;

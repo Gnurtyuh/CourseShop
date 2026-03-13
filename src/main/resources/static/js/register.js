@@ -6,7 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const name = document.getElementById("name").value.trim();
         const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
+        const password = document.getElementById("password").value.trim();
+
+        if (/\s/.test(name)) {
+            alert("Tên không được chứa khoảng trắng");
+            return false;
+        }
+
+        if (/\s/.test(email)) {
+            alert("Email không được chứa khoảng trắng");
+            return false;
+        }
+        if (password.length < 6) {
+            alert("Password quá ngắn");
+            return false;
+        }
+        if (/\s/.test(password)) {
+            alert("Password không được chứa khoảng trắng");
+            return false;
+        }
         if (!name || !email || !password) {
             alert("Vui lòng điền đầy đủ thông tin.");
             return;
