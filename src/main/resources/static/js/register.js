@@ -12,7 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Tên không được chứa khoảng trắng");
             return false;
         }
-
+        if (name.length > 150) {
+            alert("Tên quá dài");
+            return false;
+        }
         if (/\s/.test(email)) {
             alert("Email không được chứa khoảng trắng");
             return false;
@@ -38,7 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 body: JSON.stringify({ name, email, password }),
             });
+            const message = await res.text();
 
+            if (!res.ok) {
+                alert(message);
+                return;
+            }
             if (res.ok) {
                 alert("Đăng ký thành công! Chuyển đến trang đăng nhập...");
                 window.location.href = "login";
@@ -48,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } catch (err) {
             console.error("Lỗi kết nối:", err);
-            alert("Không thể kết nối đến máy chủ.");
+            alert(err);
         }
     });
 });

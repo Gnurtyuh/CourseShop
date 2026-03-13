@@ -39,6 +39,9 @@ public class UsersService {
         if (!isValidEmail(user.getEmail())) {
             throw new BadRequestException("Định dạng email bị lỗi");
         }
+        if (!user.getName().matches("^[A-Za-zÀ-ỹ\\s]+$")) {
+            throw new BadRequestException("Tên không hợp lệ");
+        }
         if (user.getPassword().length() < 6) {
             throw new BadRequestException("Mật khẩu quá ngắn");
         }
