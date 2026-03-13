@@ -80,7 +80,7 @@ public class LoginTest extends BaseTest {
         if(driver.findElements(By.id("loginBtn")).size() > 0)
             System.out.println("Element found: Login button");
         else
-            System.out.println("Element NOT found: Login button");
+            System.out.println("Element NOT found:Login button");
 
         step(3, "Enter wrong login information");
 
