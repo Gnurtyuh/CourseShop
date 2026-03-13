@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
@@ -21,21 +23,19 @@ public class BaseTest {
     protected static final String BASE_URL = "http://localhost:8080/";
     protected static final String REGISTER_PAGE ="http://localhost:8080/register";
 
-    @BeforeSuite
-    public void setupSuite() {
-        WebDriverManager.chromedriver().setup();
-    }
-
     @BeforeMethod
     public void setup() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--disable-notifications");
-        options.addArguments("--start-maximized");
 
-        driver = new ChromeDriver(options);
+        System.setProperty("webdriver.gecko.driver", "C:\\Users\\Admin\\Downloads\\geckodriver-v0.36.0-win64\\geckodriver.exe");
+
+        FirefoxOptions options = new FirefoxOptions();
+
+        driver = new FirefoxDriver(options);
+
+        driver.manage().window().maximize();
+
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get(REGISTER_PAGE);
+
     }
 
     @AfterMethod
