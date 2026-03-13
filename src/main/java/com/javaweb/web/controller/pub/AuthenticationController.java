@@ -22,21 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationController {
-    @Autowired
-    AuthenticationService authenticationService;
-    @Autowired
-    private UsersService usersService;
+
+    final AuthenticationService authenticationService;
+
+    private final UsersService usersService;
     @PostMapping("/login")
     public ResponseEntity<AuthenticationUtil> authenticate(@RequestBody Authentications authentications) {
         var result = authenticationService.authenticate(authentications);
         return ResponseEntity.ok(result);
     }
     @PostMapping
-    ResponseEntity<String> createUser(@RequestBody RegisterRequest user) {
+    public ResponseEntity<String> createUser(@RequestBody RegisterRequest user) {
         if (usersService.getUserByUsername(user.getName()) != null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Tên đã tồn tại");
         }
         if( usersService.getUserByEmail(user.getEmail()) != null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email đã tồn tại");
+        }
+        if(user.getPassword() == null ||user.getPassword().length() < 6) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email đã tồn tại");
         }
         usersService.userRegister(user);

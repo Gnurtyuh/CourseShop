@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (res.ok) {
                 alert("Đăng ký thành công! Chuyển đến trang đăng nhập...");
-                window.location.href = "login.html";
+                window.location.href = "login";
             } else {
                 const error = await res.json();
                 alert("Đăng ký thất bại: " + (error.message || "Đã xảy ra lỗi"));

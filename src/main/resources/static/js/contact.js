@@ -45,7 +45,7 @@
         localStorage.removeItem("user");
         showNotification("Bạn đã đăng xuất.");
         setTimeout(() => {
-          window.location.href = "index.html";
+          window.location.href = "index";
         }, 1500);
       }
 
@@ -90,7 +90,7 @@
         myCoursesLink.onclick = (e) => {
           e.preventDefault();
           userMenu.classList.remove("active");
-          window.location.href = "my-courses.html";
+          window.location.href = "my-courses";
         };
       }
 
@@ -98,7 +98,7 @@
         profileLink.onclick = (e) => {
           e.preventDefault();
           userMenu.classList.remove("active");
-          window.location.href = "profile.html";
+          window.location.href = "profile";
         };
       }
 
@@ -106,7 +106,7 @@
         topupLink.onclick = (e) => {
           e.preventDefault();
           userMenu.classList.remove("active");
-          window.location.href = "topup.html";
+          window.location.href = "topup";
         };
       }
 
@@ -114,7 +114,7 @@
         contactLink.onclick = (e) => {
           e.preventDefault();
           userMenu.classList.remove("active");
-          window.location.href = "contact.html";
+          window.location.href = "contact";
         };
       }
 
@@ -122,7 +122,7 @@
         topupGuideLink.onclick = (e) => {
           e.preventDefault();
           userMenu.classList.remove("active");
-          window.location.href = "topup-guide.html";
+          window.location.href = "topup-guide";
         };
       }
     });

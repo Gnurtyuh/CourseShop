@@ -11,18 +11,12 @@ import java.util.Optional;
 @Repository
 public interface UsersRepo extends JpaRepository<Users, Integer> {
     boolean existsByName(String name);
-    Users findByEmail(String email);
+    @Query("SELECT u FROM Users u WHERE u.email = :email")
+    Users findByEmail(@Param("email")String email);
     Optional<Users> findByName(String name);
-
+    boolean existsByEmail(String email);
     // Tìm user theo tên
     @Query("SELECT u FROM Users u WHERE u.name = :name")
     Users findUserByName(@Param("name") String name);
 
-    // Kiểm tra tên đã tồn tại chưa (loại trừ user hiện tại)
-    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM Users u WHERE LOWER(TRIM(u.name)) = LOWER(TRIM(:name)) AND u.id != :id")
-    boolean existsByNameExcludingId(@Param("name") String name, @Param("id") int id);
-
-    // Kiểm tra email đã tồn tại chưa (loại trừ user hiện tại)
-    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM Users u WHERE LOWER(TRIM(u.email)) = LOWER(TRIM(:email)) AND u.id != :id")
-    boolean existsByEmailExcludingId(@Param("email") String email, @Param("id") int id);
 }

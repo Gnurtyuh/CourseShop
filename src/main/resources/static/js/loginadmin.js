@@ -39,7 +39,7 @@
 //       role: 'admin'
 //     }));
 //     alert('Đăng nhập quản trị viên thành công!');
-//     window.location.href = 'admin.html';
+//     window.location.href = 'admin';
 //   } else {
 //     errorMessage.textContent = 'Mật khẩu không đúng!';
 //     errorMessage.style.display = 'block';
@@ -81,7 +81,7 @@ document.getElementById('loginAdminForm').addEventListener('submit', async funct
       localStorage.setItem('admin', JSON.stringify(admin));
 
       alert('Đăng nhập quản trị viên thành công!');
-      window.location.href = 'admin.html';
+      window.location.href = 'admin';
     } else {
       throw new Error(data.message || 'Xác thực thất bại!');
     }

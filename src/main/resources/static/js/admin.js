@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Đăng xuất
   logoutBtn?.addEventListener("click", () => {
     alert("Đăng xuất thành công!");
-    window.location.href = "loginadmin.html";
+    window.location.href = "loginadmin";
   });
 
   createCourseForm?.addEventListener("submit", async (e) => {

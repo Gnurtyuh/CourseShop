@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (userMenu) userMenu.style.display = "none";
     showNotification("Vui lòng đăng nhập để xem thông tin cá nhân!", true);
     setTimeout(() => {
-      window.location.href = "login.html";
+      window.location.href = "login";
     }, 1500);
   }
   // Kiểm tra trạng thái đăng nhập
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (userMenu) userMenu.style.display = "none";
       showNotification("Vui lòng đăng nhập để xem bài giảng!", true);
       setTimeout(() => {
-        window.location.href = "login.html";
+        window.location.href = "login";
       }, 1500);
       return null;
     }
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("user");
     showNotification("Bạn đã đăng xuất.");
     setTimeout(() => {
-      window.location.href = "index.html";
+      window.location.href = "index";
     }, 1500);
   }
 
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     myCoursesLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "my-courses.html";
+      window.location.href = "my-courses";
     };
   }
 
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     profileLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "profile.html";
+      window.location.href = "profile";
     };
   }
 
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
     topupLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "topup.html";
+      window.location.href = "topup";
     };
   }
 
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
     contactLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "contact.html";
+      window.location.href = "contact";
     };
   }
 
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     topupGuideLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "topup-guide.html";
+      window.location.href = "topup-guide";
     };
   }
 
@@ -168,13 +168,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.status === 401) {
         showNotification("Phiên đăng nhập đã hết hạn.", true);
-        setTimeout(() => window.location.href = "login.html", 1500);
+        setTimeout(() => window.location.href = "login", 1500);
         return null;
       }
 
       if (!response.ok) {
         showNotification("Không tìm thấy khóa học!", true);
-        setTimeout(() => window.location.href = "courses.html", 1500);
+        setTimeout(() => window.location.href = "courses", 1500);
         return null;
       }
 
@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       console.error("Fetch error:", error);
       showNotification("Đã xảy ra lỗi khi tải khóa học.", true);
-      setTimeout(() => window.location.href = "my-courses.html", 1500);
+      setTimeout(() => window.location.href = "my-courses", 1500);
       return null;
     }
   }
@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Lỗi khi tải dữ liệu khóa học:", err);
       alert("Không thể tải dữ liệu khóa học. Vui lòng thử lại.");
-      window.location.href = "courses.html";
+      window.location.href = "course";
     }
   }
 
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
   (async function () {
     if (!courseId) {
       showNotification("Không tìm thấy khóa học!", true);
-      setTimeout(() => window.location.href = "my-courses.html", 1500);
+      setTimeout(() => window.location.href = "my-courses", 1500);
       return;
     }
 

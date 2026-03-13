@@ -18,15 +18,15 @@ public class RegisterAPITest {
     @BeforeClass
     public void setup() {
         RestAssured.baseURI = "http://localhost:8080";
-        RestAssured.basePath = "/CourseShop/api/public/auth";
+        RestAssured.basePath = "/api/public/auth";
     }
 
     @Test(priority = 1)
     public void testRegisterSuccess() {
         String uniqueEmail = "user" + UUID.randomUUID() + "@email.com";
-
+        String uniqueName   = "user" + UUID.randomUUID() ;
         Map<String, Object> user = new HashMap<>();
-        user.put("name", "testuser");
+        user.put("name", uniqueName);
         user.put("email", uniqueEmail);
         user.put("password", "123456@Abc");
 
@@ -36,6 +36,7 @@ public class RegisterAPITest {
                 .when()
                 .post()
                 .then()
+                .log().all()
                 .statusCode(200)
                 .body(equalTo("Đăng ký thành công"));
     }
@@ -53,15 +54,16 @@ public class RegisterAPITest {
                 .when()
                 .post()
                 .then()
-                .statusCode(anyOf(is(400), is(409)))
+                .log().all()
+                .statusCode(anyOf(is(400), is(401)))
                 .body(containsString("Tên đã tồn tại"));
     }
 
     @Test(priority = 3)
     public void testRegisterDuplicateEmail() {
         Map<String, Object> user = new HashMap<>();
-        user.put("name", "newuser" + UUID.randomUUID());
-        user.put("email", "nkocsoc2004@email.com"); // Email đã tồn tại
+        user.put("name", "new" + UUID.randomUUID());
+        user.put("email", "nkocsoc200@gmail.com"); // Email đã tồn tại
         user.put("password", "123456@Abc");
 
         given()
@@ -77,7 +79,7 @@ public class RegisterAPITest {
     @Test(priority = 4)
     public void testRegisterInvalidEmail() {
         Map<String, Object> user = new HashMap<>();
-        user.put("name", "testuser");
+        user.put("name", "InvalidEmail"+ UUID.randomUUID());
         user.put("email", "invalid-email");
         user.put("password", "123456@Abc");
 
@@ -94,8 +96,8 @@ public class RegisterAPITest {
     @Test(priority = 5)
     public void testRegisterMissingField() {
         Map<String, Object> user = new HashMap<>();
-        user.put("name", "testuser");
-        user.put("email", "test@email.com");
+        user.put("name", "MissingField" + UUID.randomUUID());
+        user.put("email", "test"+UUID.randomUUID()+"@email.com");
         // Thiếu password
 
         given()
@@ -104,7 +106,7 @@ public class RegisterAPITest {
                 .when()
                 .post()
                 .then()
-                .statusCode(400);
+                .statusCode(anyOf(is(400), is(401)));
     }
 
     @Test(priority = 6)

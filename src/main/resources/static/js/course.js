@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Kiểm tra courseId có tồn tại không
   if (!courseId) {
     showNotification("Không tìm thấy mã khóa học!", true);
-    setTimeout(() => window.location.href = "index.html", 2000);
+    setTimeout(() => window.location.href = "index", 2000);
     return;
   }
 
@@ -91,13 +91,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.removeItem("userToken");
     showNotification("Bạn đã đăng xuất.");
     setTimeout(() => {
-      window.location.href = "index.html";
+      window.location.href = "index";
     }, 1500);
   }
 
   // Hàm chuyển đến trang học
   function goToCourseVideo() {
-    window.location.href = `course-video.html?courseId=${courseId}`;
+    window.location.href = `course-video?courseId=${courseId}`;
   }
 
   // Kiểm tra đăng nhập khi tải trang
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     myCoursesLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "my-courses.html";
+      window.location.href = "my-courses";
     };
   }
 
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     profileLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "profile.html";
+      window.location.href = "profile";
     };
   }
 
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     topupLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "topup.html";
+      window.location.href = "topup";
     };
   }
 
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     contactLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "contact.html";
+      window.location.href = "contact";
     };
   }
 
@@ -183,7 +183,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       sectionDiv.className = "course-section";
 
       const sectionTitle = document.createElement("h3");
-      sectionTitle.textContent = section.title || "Không có tiêu đề";
+      sectionTitle.textContent =
+          section.sectionTitle
+          "Không có tiêu đề";
 
       const lessonList = document.createElement("ul");
 
@@ -228,7 +230,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const courseData = await resLessons.json();
-
+    console.log(courseData);
     // Hiển thị chi tiết khóa học
     if (courseTitle) courseTitle.textContent = courseInfo.title || "Không có tiêu đề";
     if (courseDescription) {
@@ -288,7 +290,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           if (!user || !token) {
             showNotification("Vui lòng đăng nhập để mua khóa học!", true);
-            setTimeout(() => window.location.href = "login.html", 1500);
+            setTimeout(() => window.location.href = "login", 1500);
             return;
           }
 

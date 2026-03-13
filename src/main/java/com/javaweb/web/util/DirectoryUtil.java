@@ -24,7 +24,7 @@ public class DirectoryUtil {
         String safeCourseTitle = noAccentCourse.replaceAll("[^a-zA-Z0-9]", "_");
         String safeSectionTitle = noAccentSection.replaceAll("[^a-zA-Z0-9]", "_");
 
-        String folderPath = "src/main/resources/static/videos/" + safeCourseTitle + "/" + safeSectionTitle;
+        String folderPath = "/videos/" + safeCourseTitle + "/" + safeSectionTitle;
         File directory = new File(folderPath);
 
         if (!directory.exists()) {
@@ -39,7 +39,7 @@ public class DirectoryUtil {
     public static void createCourseVideoDirectory(String courseTitle) {
         String noAccentTitle = removeVietnameseAccents(courseTitle);
         String safeCourseTitle = noAccentTitle.replaceAll("[^a-zA-Z0-9]", "_");
-        String folderPath = "src/main/resources/static/videos/" + safeCourseTitle;
+        String folderPath = "/videos/" + safeCourseTitle;
         File directory = new File(folderPath);
 
         if (!directory.exists()) {

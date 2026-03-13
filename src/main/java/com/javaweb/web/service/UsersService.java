@@ -1,9 +1,11 @@
 package com.javaweb.web.service;
 
+import com.github.dockerjava.api.exception.BadRequestException;
 import com.javaweb.web.dto.RegisterRequest;
 import com.javaweb.web.entity.Users;
 import com.javaweb.web.repository.UsersRepo;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,19 +18,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UsersService {
-    @Autowired
-    private UsersRepo userRepo;
 
+    private final UsersRepo userRepo;
+
+    @Transactional
     public Users userRegister(RegisterRequest user) {
         if (userRepo.existsByName(user.getName())) {
             throw new RuntimeException("Tên đã tồn tại");
         }
-        if (user.getPassword().length() < 6) {
-            return null;
-        }
-        if (userRepo.findByEmail(user.getEmail()) != null)
+        if (userRepo.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Email đã tồn tại");
+        }
+        if (user.getPassword().length() < 6) {
+            throw new BadRequestException("Mật khẩu quá ngắn");
+        }
+
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         Users users = new Users();
         users.setName(user.getName());
@@ -51,10 +57,8 @@ public class UsersService {
         return userRepo.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
     }
     public Users getUserByEmail(String email) {
-        if (userRepo.findByEmail(email) != null) {
-            return userRepo.findByEmail(email);
-        }
-        return null;
+
+        return userRepo.findByEmail(email);
     }
     public int count(){
         return (int )userRepo.count();
@@ -109,10 +113,6 @@ public class UsersService {
     }
     public Users getUserByUsername(String username) {
         // Tìm theo email trước
-        Users user = userRepo.findUserByName(username);;
-        if (user == null) {
-            throw new RuntimeException("Không tìm thấy người dùng!");
-        }
-        return user;
+        return userRepo.findUserByName(username);
     }
 }

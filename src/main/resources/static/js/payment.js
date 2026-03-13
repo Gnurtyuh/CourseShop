@@ -62,7 +62,7 @@
               // Chuyển hướng đến trang đăng nhập
               showNotification("Vui lòng đăng nhập để thanh toán!", true);
               setTimeout(() => {
-                  window.location.href = "login.html";
+                  window.location.href = "login";
               }, 1500);
               return false;
           }
@@ -74,7 +74,7 @@
         localStorage.removeItem("user");
         showNotification("Bạn đã đăng xuất.");
         setTimeout(() => {
-          window.location.href = "index.html";
+          window.location.href = "index";
         }, 1500);
       }
 
@@ -119,7 +119,7 @@
         myCoursesLink.onclick = (e) => {
           e.preventDefault();
           userMenu.classList.remove("active");
-          window.location.href = "my-course.html";
+          window.location.href = "my-course";
         };
       }
 
@@ -127,7 +127,7 @@
         profileLink.onclick = (e) => {
           e.preventDefault();
           userMenu.classList.remove("active");
-          window.location.href = "profile.html";
+          window.location.href = "profile";
         };
       }
 
@@ -135,7 +135,7 @@
         topupLink.onclick = (e) => {
           e.preventDefault();
           userMenu.classList.remove("active");
-          window.location.href = "topup.html";
+          window.location.href = "topup";
         };
       }
 
@@ -143,7 +143,7 @@
         contactLink.onclick = (e) => {
           e.preventDefault();
           userMenu.classList.remove("active");
-          window.location.href = "contact.html";
+          window.location.href = "contact";
         };
       }
 
@@ -151,7 +151,7 @@
         topupGuideLink.onclick = (e) => {
           e.preventDefault();
           userMenu.classList.remove("active");
-          window.location.href = "topup-guide.html";
+          window.location.href = "topup-guide";
         };
       }
 
@@ -189,7 +189,7 @@
                          if (seconds <= 0) {
                              clearInterval(countdownInterval);
                              alert("Đợi xét duyệt");
-                             window.location.href = "index.html"; // điều hướng sau khi thành công
+                             window.location.href = "index"; // điều hướng sau khi thành công
                          }
                      }, 10);
                  } else {
@@ -203,7 +203,7 @@
 
          btnCancel.addEventListener("click", () => {
              if (confirm("Bạn có chắc muốn hủy nạp tiền không?")) {
-                 window.location.href = "index.html";
+                 window.location.href = "index";
              }
          });
      });

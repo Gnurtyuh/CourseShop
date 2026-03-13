@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("user");
     showNotification("Bạn đã đăng xuất.");
     setTimeout(() => {
-      window.location.href = "index.html";
+      window.location.href = "index";
     }, 1500);
   }
 
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
     myCoursesLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "my-courses.html";
+      window.location.href = "my-courses";
     };
   }
 
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     profileLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "profile.html";
+      window.location.href = "profile";
     };
   }
 
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     topupLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "topup.html";
+      window.location.href = "topup";
     };
   }
 
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     contactLink.onclick = (e) => {
       e.preventDefault();
       userMenu.classList.remove("active");
-      window.location.href = "contact.html";
+      window.location.href = "contact";
     };
   }
 
@@ -138,11 +138,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!user) {
         showNotification("Vui lòng đăng nhập để nạp tiền!", true);
         setTimeout(() => {
-          window.location.href = "login.html";
+          window.location.href = "login";
         }, 1500);
         return;
       }
-      window.location.href = "topup.html";
+      window.location.href = "topup";
     });
   }
 });

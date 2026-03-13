@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function redirectToLogin() {
         setTimeout(() => {
-            window.location.href = "login.html";
+            window.location.href = "login";
         }, 1500);
     }
 
@@ -86,16 +86,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         localStorage.removeItem("userToken");
         showNotification("Bạn đã đăng xuất.");
         setTimeout(() => {
-            window.location.href = "index.html";
+            window.location.href = "index";
         }, 1500);
     }
 
     function goToCourseDetail(courseId) {
-        window.location.href = `course.html?id=${courseId}`;
+        window.location.href = `course?id=${courseId}`;
     }
 
     function goToCourseVideo(courseId) {
-        window.location.href = `course-video.html?courseId=${courseId}`;
+        window.location.href = `course-video?courseId=${courseId}`;
     }
 
     function renderMyCourses(courses) {
@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         myCoursesLink.onclick = e => {
             e.preventDefault();
             userMenu.classList.remove("active");
-            window.location.href = "my-courses.html";
+            window.location.href = "my-courses";
         };
     }
 
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         profileLink.onclick = e => {
             e.preventDefault();
             userMenu.classList.remove("active");
-            window.location.href = "profile.html";
+            window.location.href = "profile";
         };
     }
 
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         topupLink.onclick = e => {
             e.preventDefault();
             userMenu.classList.remove("active");
-            window.location.href = "topup.html";
+            window.location.href = "topup";
         };
     }
 
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         contactLink.onclick = e => {
             e.preventDefault();
             userMenu.classList.remove("active");
-            window.location.href = "contact.html";
+            window.location.href = "contact";
         };
     }
 
@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         topupGuideLink.onclick = e => {
             e.preventDefault();
             userMenu.classList.remove("active");
-            window.location.href = "topup-guide.html";
+            window.location.href = "topup-guide";
         };
     }
 
@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         searchBtn.onclick = () => {
             const query = searchInput?.value.trim();
             if (query) {
-                window.location.href = `index.html?search=${encodeURIComponent(query)}`;
+                window.location.href = `index?search=${encodeURIComponent(query)}`;
             }
         };
     }
@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (e.key === "Enter") {
                 const query = searchInput.value.trim();
                 if (query) {
-                    window.location.href = `index.html?search=${encodeURIComponent(query)}`;
+                    window.location.href = `index?search=${encodeURIComponent(query)}`;
                 }
             }
         };

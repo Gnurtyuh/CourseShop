@@ -33,17 +33,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/api/public/auth").permitAll()
                         .requestMatchers("/privateAd/**").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register",
                                 "/css/**",
                                 "/js/**",
+                                "/image/**",
+                                "/css/**",
+                                "/js/**",
                                 "/images/**",
-                                "/static/css/**",
-                                "/static/js/**",
-                                "/static/images/**",
                                 "/**").permitAll()
-                        .requestMatchers("/CourseShop/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/api/users/**").hasRole("USER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 )

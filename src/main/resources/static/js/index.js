@@ -1,6 +1,6 @@
 // Khởi tạo biến
-const initialShow = 4;
-const loadStep = 4;
+const initialShow = 5;
+const loadStep = 5;
 let courses = [];
 let myCourses = []; // Danh sách khóa học đã mua
 let showCount = {};
@@ -141,7 +141,7 @@ function renderCourses(filteredCourses = null) {
       btnDetail.classList.add("btn-detail");
       btnDetail.onclick = () => {
         const idEncoded = encodeURIComponent(course.id);
-        window.location.href = `course.html?id=${idEncoded}`;
+        window.location.href = `course?id=${idEncoded}`;
       };
 
       buttonGroup.appendChild(btnDetail);
@@ -188,7 +188,7 @@ function renderCourses(filteredCourses = null) {
           btnBuy.onclick = () => {
             showNotification("Vui lòng đăng nhập để mua khóa học!", true);
             setTimeout(() => {
-              window.location.href = "login.html";
+              window.location.href = "login";
             }, 1500);
           };
         }
@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (myCoursesLink) {
     myCoursesLink.onclick = () => {
       if (userMenu) userMenu.classList.remove("active");
-      window.location.href = "my-courses.html";
+      window.location.href = "my-courses";
     };
   }
 
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (profileLink) {
     profileLink.onclick = () => {
       if (userMenu) userMenu.classList.remove("active");
-      window.location.href = "profile.html";
+      window.location.href = "profile";
     };
   }
 
@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (topupLink) {
     topupLink.onclick = () => {
       if (userMenu) userMenu.classList.remove("active");
-      window.location.href = "topup.html";
+      window.location.href = "topup";
     };
   }
 
@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (contactLink) {
     contactLink.onclick = () => {
       if (userMenu) userMenu.classList.remove("active");
-      window.location.href = "contact.html";
+      window.location.href = "contact";
     };
   }
 
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (topupGuideLink) {
     topupGuideLink.onclick = () => {
       if (userMenu) userMenu.classList.remove("active");
-      window.location.href = "topup-guide.html";
+      window.location.href = "topup-guide";
     };
   }
 

@@ -26,7 +26,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('userToken', result.token);
       alert('Đăng nhập thành công!');
-      window.location.href = 'index.html';
+      window.location.href = 'index';
     } else {
       // Trường hợp đăng nhập không thành công
       alert(result.message || 'Sai email hoặc mật khẩu!');
