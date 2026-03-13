@@ -55,13 +55,21 @@ public class BaseTest {
 
         System.out.println("LocalStorage [" + key + "] = " + value);
     }
-    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+//    @AfterMethod
+//    public void tearDown() {
+//        if (driver != null) {
+//
+//            driver.quit();
+//        }
+//    }
+@AfterMethod
+public void tearDown() throws InterruptedException {
+    Thread.sleep(8000);
 
+    if (driver != null) {
+        driver.quit();
+    }
+}
     protected void enterRegistrationData(String username, String email, String password) {
         WebElement usernameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
         WebElement emailField = driver.findElement(By.id("email"));

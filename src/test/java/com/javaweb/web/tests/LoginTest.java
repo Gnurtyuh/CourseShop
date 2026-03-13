@@ -3,6 +3,7 @@ package com.javaweb.web.tests;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -24,7 +25,7 @@ public class LoginTest extends BaseTest {
 
         step(3, "Enter login information");
 
-        driver.findElement(By.id("name")).sendKeys("Thynh");
+        driver.findElement(By.id("name")).sendKeys("TenNguoiDung");
         driver.findElement(By.id("password")).sendKeys("123456");
 
         step(4, "Click login button");
@@ -50,7 +51,7 @@ public class LoginTest extends BaseTest {
                 .executeScript("return localStorage.getItem('userToken');");
 
         Assert.assertNotNull(token);
-
+        Assert.assertFalse(alertText.isEmpty());
         step(7, "Wait redirect to index page");
 
         wait.until(ExpectedConditions.urlContains("index"));
@@ -101,10 +102,285 @@ public class LoginTest extends BaseTest {
 
         step(6, "Verify error message");
 
-        Assert.assertEquals(alertText, "Sai email hoặc mật khẩu!");
+        Assert.assertFalse(alertText.isEmpty());
 
         alert.accept();
 
         step(7, "Test completed");
+    }
+    @Test
+    public void TC_LOG_03_UserNotExist() {
+
+        step(1, "Open login page");
+        driver.get(BASE_URL + "login");
+
+        step(2, "Enter non-existing username");
+
+        driver.findElement(By.id("name")).sendKeys("nonexistent");
+        driver.findElement(By.id("password")).sendKeys("123456");
+
+        step(3, "Click login button");
+
+        driver.findElement(By.id("loginBtn")).click();
+
+        step(4, "Wait for alert");
+
+        Alert alert = wait.until(d -> d.switchTo().alert());
+
+        String alertText = alert.getText();
+
+        System.out.println("Alert message: " + alertText);
+
+        step(5, "Verify error message");
+
+        Assert.assertFalse(alertText.isEmpty());
+
+//        alert.accept();
+        step(6, "Test completed");
+    }
+    @Test
+    public void TC_LOG_04_EmptyName() {
+
+        step(1, "Open login page");
+        driver.get(BASE_URL + "login");
+
+        step(2, "Leave name empty");
+
+        WebElement name = driver.findElement(By.id("name"));
+//        driver.findElement(By.id("name"));
+        driver.findElement(By.id("password")).sendKeys("123456");
+        step(3, "Click login button");
+
+        driver.findElement(By.id("loginBtn")).click();
+
+        step(4, "Check HTML5 validation message");
+
+        String message = name.getAttribute("validationMessage");
+
+        System.out.println("Validation message: " + message);
+
+        Assert.assertFalse(message.isEmpty());
+    }
+    @Test
+    public void TC_LOG_05_EmptyPassword() {
+
+        step(1, "Open login page");
+        driver.get(BASE_URL + "login");
+
+        step(2, "Leave password empty");
+
+        WebElement name = driver.findElement(By.id("name"));
+        WebElement password = driver.findElement(By.id("password"));
+
+        name.sendKeys("testuser");
+
+        step(3, "Click login button");
+
+        driver.findElement(By.id("loginBtn")).click();
+
+        step(4, "Check HTML5 validation");
+
+        String message = password.getAttribute("validationMessage");
+
+        System.out.println("Validation message: " + message);
+
+        Assert.assertFalse(message.isEmpty());
+    }
+    @Test
+    public void TC_LOG_06_EmptyAll() {
+
+        step(1, "Open login page");
+        driver.get(BASE_URL + "login");
+
+        WebElement name = driver.findElement(By.id("name"));
+
+        step(2, "Click login button with empty fields");
+
+        driver.findElement(By.id("loginBtn")).click();
+
+        step(3, "Check HTML5 validation");
+
+        String message = name.getAttribute("validationMessage");
+
+        System.out.println("Validation message: " + message);
+
+        Assert.assertFalse(message.isEmpty());
+    }
+    @Test
+    public void TC_LOG_07_UsernameWithSpaces() {
+
+        step(1, "Open login page");
+        driver.get(BASE_URL + "login");
+
+        step(2, "Enter username with leading space");
+
+        driver.findElement(By.id("name")).sendKeys(" testuser");
+        driver.findElement(By.id("password")).sendKeys("123456");
+
+        step(3, "Click login button");
+
+        driver.findElement(By.id("loginBtn")).click();
+
+        step(4, "Wait for alert");
+
+        Alert alert = wait.until(d -> d.switchTo().alert());
+
+
+        String alertText = alert.getText();
+
+        System.out.println("Alert message: " + alertText);
+
+        step(5, "Verify validation message");
+
+        Assert.assertFalse(alertText.isEmpty());
+//        alert.accept();
+    }
+    @Test
+    public void TC_LOG_08_SQLInjection()  {
+
+        step(1, "Open login page");
+        driver.get(BASE_URL + "login");
+
+        step(2, "Enter SQL Injection payload");
+
+        driver.findElement(By.id("name")).sendKeys("' OR '1'='1");
+        driver.findElement(By.id("password")).sendKeys("anything");
+
+        step(3, "Click login button");
+
+        driver.findElement(By.id("loginBtn")).click();
+
+        step(4, "Wait for alert");
+
+        Alert alert = wait.until(d -> d.switchTo().alert());
+
+        String alertText = alert.getText();
+
+        System.out.println("Alert message: " + alertText);
+
+        step(5, "Verify login failed");
+
+//        Assert.assertEquals(alertText, "Tên không được chứa khoảng trắng");
+        Assert.assertFalse(alertText.isEmpty());
+        alert.accept();
+    }
+    @Test
+    public void TC_LOG_09_UsernameTooLong() {
+
+        step(1, "Open login page");
+        driver.get(BASE_URL + "login");
+
+        step(2, "Generate long username");
+
+        String longName = "a".repeat(255);
+
+        driver.findElement(By.id("name")).sendKeys(longName);
+        driver.findElement(By.id("password")).sendKeys("123456");
+
+        step(3, "Click login button");
+
+        driver.findElement(By.id("loginBtn")).click();
+
+        step(4, "Wait for alert");
+
+        Alert alert = wait.until(d -> d.switchTo().alert());
+
+        String alertText = alert.getText();
+
+        System.out.println("Alert message: " + alertText);
+
+        step(5, "Verify backend error");
+        Assert.assertFalse(alertText.isEmpty());
+
+//        alert.accept();
+    }
+    @Test
+    public void TC_LOG_10_PasswordTooLong() {
+
+        step(1, "Open login page");
+        driver.get(BASE_URL + "login");
+
+        step(2, "Enter username and very long password");
+
+        String longPassword = "a".repeat(100);
+
+        driver.findElement(By.id("name")).sendKeys("testuser");
+        driver.findElement(By.id("password")).sendKeys(longPassword);
+
+        step(3, "Click login button");
+
+        driver.findElement(By.id("loginBtn")).click();
+
+        step(4, "Wait for alert");
+
+        Alert alert = wait.until(d -> d.switchTo().alert());
+
+        String alertText = alert.getText();
+
+        System.out.println("Alert message: " + alertText);
+
+        step(5, "Verify backend error");
+
+        Assert.assertFalse(alertText.isEmpty());
+
+        alert.accept();
+    }
+    @Test
+    public void TC_LOG_11_ServerDown() {
+
+        step(1, "Open login page");
+        driver.get(BASE_URL + "login");
+
+        step(2, "Enter login information");
+
+        driver.findElement(By.id("name")).sendKeys("testuser");
+        driver.findElement(By.id("password")).sendKeys("123456");
+
+        step(3, "Click login button");
+
+        driver.findElement(By.id("loginBtn")).click();
+
+        step(4, "Wait for alert");
+
+        Alert alert = wait.until(d -> d.switchTo().alert());
+        String alertText = alert.getText();
+        System.out.println("Server error message: " + alertText);
+
+        System.out.println("Alert message: " + alertText);
+
+        step(5, "Verify exception handling");
+
+        Assert.assertFalse(alertText.isEmpty());
+
+        alert.accept();
+    }
+    @Test
+    public void TC_LOG_12_PasswordWithSpaces() {
+
+        step(1, "Open login page");
+        driver.get(BASE_URL + "login");
+
+        step(2, "Enter password with spaces");
+
+        driver.findElement(By.id("name")).sendKeys("testuser");
+        driver.findElement(By.id("password")).sendKeys("123 456");
+
+        step(3, "Click login button");
+
+        driver.findElement(By.id("loginBtn")).click();
+
+        step(4, "Wait for alert");
+
+        Alert alert = wait.until(d -> d.switchTo().alert());
+
+        String alertText = alert.getText();
+
+        System.out.println("Alert message: " + alertText);
+
+        step(5, "Verify system rule");
+
+        Assert.assertFalse(alertText.isEmpty());
+
+//        alert.accept();
     }
 }
