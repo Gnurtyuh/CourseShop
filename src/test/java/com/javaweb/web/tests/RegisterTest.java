@@ -54,7 +54,7 @@ public class RegisterTest extends BaseTest {
 
         Assert.assertNotNull(alertMessage, "Alert should appear");
         Assert.assertTrue(alertMessage.contains("Đăng ký thành công"),
-                "Alert should contain success message");
+                "Đăng ký thành công! Chuyển đến trang đăng nhập...");
 
         Assert.assertTrue(isRedirectedToLoginPage(),
                 "Should redirect to login page");
