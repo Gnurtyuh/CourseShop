@@ -1,10 +1,7 @@
 package com.javaweb.web.tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -23,21 +20,41 @@ public class BaseTest {
     protected static final String BASE_URL = "http://localhost:8080/";
     protected static final String REGISTER_PAGE ="http://localhost:8080/register";
 
-    @BeforeMethod
-    public void setup() {
+@BeforeMethod
+public void setup() {
 
-        System.setProperty("webdriver.gecko.driver", "C:\\Users\\Admin\\Downloads\\geckodriver-v0.36.0-win64\\geckodriver.exe");
+    System.setProperty("webdriver.gecko.driver", "D:\\geckodriver-v0.36.0-win64\\geckodriver.exe");
 
-        FirefoxOptions options = new FirefoxOptions();
+    FirefoxOptions options = new FirefoxOptions();
 
-        driver = new FirefoxDriver(options);
+    driver = new FirefoxDriver(options);
 
-        driver.manage().window().maximize();
+    driver.manage().window().maximize();
 
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
+}
+    protected void step(int number, String message) {
+        System.out.println("STEP " + number + ": " + message);
+    }
+    protected void logUrl() {
+        System.out.println("Current URL: " + driver.getCurrentUrl());
     }
 
+    protected void logElement(String name, By locator) {
+        if (driver.findElements(locator).size() > 0) {
+            System.out.println("Element found: " + name);
+        } else {
+            System.out.println("Element NOT found: " + name);
+        }
+    }
+
+    protected void logLocalStorage(String key) {
+        String value = (String) ((JavascriptExecutor) driver)
+                .executeScript("return localStorage.getItem(arguments[0]);", key);
+
+        System.out.println("LocalStorage [" + key + "] = " + value);
+    }
     @AfterMethod
     public void tearDown() {
         if (driver != null) {
@@ -83,7 +100,7 @@ public class BaseTest {
 
     protected boolean isRedirectedToLoginPage() {
         try {
-            wait.until(ExpectedConditions.urlContains("login"));
+            wait.until(ExpectedConditions.urlContains("login.html"));
             return true;
         } catch (Exception e) {
             return false;
