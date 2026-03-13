@@ -1,6 +1,8 @@
 package com.javaweb.web.tests;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -107,12 +109,13 @@ public class RegisterTest extends BaseTest {
         enterRegistrationData(name, email, password);
         submitForm();
 
-        String alertMessage = getAlertMessage();
+        WebElement emailField = driver.findElement(By.id("email"));
 
-        Assert.assertNotNull(alertMessage, "Alert should appear");
+        String validationMessage = emailField.getAttribute("validationMessage");
 
-        Assert.assertTrue(alertMessage.toLowerCase().contains("email"),
-                "Should show email format error");
+        Assert.assertNotNull(validationMessage);
+        Assert.assertFalse(validationMessage.isEmpty(),
+                "Browser should show email validation message");
     }
 
     // TC-REG-010: Password quá ngắn
