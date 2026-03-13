@@ -500,10 +500,15 @@
     <section class="course-video-section">
       <div class="video-player" id="video-player">
         <h2 id="course-title">Tên khóa học</h2>
-        <video id="course-video" controls>
-          <source src="" type="video/mp4" />
-          Trình duyệt của bạn không hỗ trợ phát video.
-        </video>
+        <video id="course-video" controls style="display:none;"></video>
+
+        <iframe
+                id="youtube-player"
+                width="850"
+                height="500"
+                style="display:none;border:none"
+                allowfullscreen>
+        </iframe>
         <p id="course-description">Mô tả khóa học</p>
       </div>
       <div class="lesson-list" id="lesson-list">
@@ -541,7 +546,7 @@
   </footer>
 
   <div id="notification"></div>
-
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="/js/course-video.js"></script>
 </body>
 </html>

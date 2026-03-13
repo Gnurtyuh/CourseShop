@@ -1,3 +1,18 @@
+let player;
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("youtube-player", {
+    height: "400",
+    width: "100%",
+    videoId: "",
+    playerVars: {
+      autoplay: 1,
+      modestbranding: 1,
+      rel: 0
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Lấy các phần tử DOM
   const userMenu = document.getElementById("user-menu");
@@ -186,16 +201,61 @@ document.addEventListener("DOMContentLoaded", () => {
       return null;
     }
   }
+  function playVideo(url) {
 
+    const video = document.getElementById("course-video");
+    const youtube = document.getElementById("youtube-player");
+
+    if (!url) return;
+
+    // ===== YOUTUBE =====
+    if (url.includes("youtube") || url.includes("youtu.be")) {
+
+      video.pause();
+      video.style.display = "none";
+
+      youtube.style.display = "block";
+
+      let videoId = "";
+
+      if (url.includes("watch?v=")) {
+        videoId = url.split("watch?v=")[1];
+      } else {
+        videoId = url.split("youtu.be/")[1];
+      }
+
+      if (player && player.loadVideoById) {
+        player.loadVideoById(videoId);
+      } else {
+        youtube.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      }
+
+    }
+
+    // ===== VIDEO LOCAL =====
+    else {
+
+      youtube.style.display = "none";
+
+      url = url.replace(/\\/g, "/");
+
+      if (!url.startsWith("http")) {
+        url = "http://localhost:8080" + url;
+      }
+
+      video.src = url;
+      video.load();
+      video.style.display = "block";
+    }
+  }
   // Kiểm tra quyền sở hữu khóa học
   async function loadCourseData(courseId) {
     try {
-      // 1. Lấy thông tin khóa học
+
       const course = await fetchCourse(`http://localhost:8080/api/users/course/me/${courseId}`);
       courseTitle.textContent = course.name;
       courseDescription.textContent = course.description;
 
-      // 2. Lấy danh sách sections
       const sections = await fetchCourse(`http://localhost:8080/api/users/courseSection/by-course/${courseId}`);
 
       if (!sections.length) {
@@ -207,48 +267,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let firstVideoSet = false;
 
-      // 3. Lặp từng section để gọi tiếp /lessons
       for (const section of sections) {
-        // Tạo tiêu đề section
+
         const sectionTitle = document.createElement("li");
         sectionTitle.innerHTML = `<strong>${section.title}</strong>`;
         sectionTitle.classList.add("section-title");
         lessonsList.appendChild(sectionTitle);
 
-        // 4. Lấy lessons cho section đó
         const lessons = await fetchCourse(`http://localhost:8080/api/users/courseLesson/findAll?section_id=${section.id}`);
 
         lessons.forEach((lesson, index) => {
-          const lessonItem = document.createElement("li");
-          lessonItem.className = (!firstVideoSet && index === 0) ? "active" : "";
 
-          lessonItem.innerHTML = `<a href="#" data-video="${lesson.videoUrl}">${lesson.title}</a>`;
+          const lessonItem = document.createElement("li");
+
+          lessonItem.innerHTML = `<a href="#">${lesson.title}</a>`;
           lessonsList.appendChild(lessonItem);
 
-          // Auto phát video đầu tiên
-          if (!firstVideoSet && index === 0) {
-            courseVideo.src = lesson.videoUrl;
-            courseVideo.load();
-            courseVideo.style.display = "block";
+          // ===== AUTO VIDEO ĐẦU TIÊN =====
+          if (!firstVideoSet && index === 0 && lesson.videoUrl) {
+            playVideo(lesson.videoUrl);
+            lessonItem.classList.add("active");
             firstVideoSet = true;
           }
 
-          // Click để phát video
+          // ===== CLICK PHÁT VIDEO =====
           lessonItem.querySelector("a").addEventListener("click", (e) => {
+
             e.preventDefault();
-            courseVideo.src = lesson.videoUrl;
-            courseVideo.load();
-            courseVideo.style.display = "block";
+
+            if (!lesson.videoUrl) {
+              alert("Bài học chưa có video.");
+              return;
+            }
+
+            playVideo(lesson.videoUrl);
+
             lessonsList.querySelectorAll("li").forEach(li => li.classList.remove("active"));
             lessonItem.classList.add("active");
+
           });
+
         });
       }
 
     } catch (err) {
+
       console.error("Lỗi khi tải dữ liệu khóa học:", err);
       alert("Không thể tải dữ liệu khóa học. Vui lòng thử lại.");
       window.location.href = "course";
+
     }
   }
 
