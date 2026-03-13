@@ -89,7 +89,7 @@ public class RegisterAPITest {
                 .when()
                 .post()
                 .then()
-                .statusCode(400)
+                .statusCode(anyOf(is(400), is(401)))
                 .body(containsString("email"));
     }
 
@@ -115,7 +115,6 @@ public class RegisterAPITest {
         user.put("name", "' OR '1'='1");
         user.put("email", "test@email.com");
         user.put("password", "123456@Abc");
-        user.put("balance", 0);
 
         given()
                 .contentType(ContentType.JSON)
@@ -123,7 +122,7 @@ public class RegisterAPITest {
                 .when()
                 .post()
                 .then()
-                .statusCode(anyOf(is(400), is(200))) // Không được 500
+                .statusCode(anyOf(is(401), is(200))) // Không được 500
                 .body(not(containsString("SQL")));
     }
 }

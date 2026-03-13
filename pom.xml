@@ -141,7 +141,13 @@
 			<version>5.10.3</version> <!-- can be omitted when using the BOM -->
 			<scope>test</scope>
 		</dependency>
-
+		<!-- Source: https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.10.0</version>
+			<scope>compile</scope>
+		</dependency>
 		<!-- AssertJ -->
 		<dependency>
 			<groupId>org.assertj</groupId>

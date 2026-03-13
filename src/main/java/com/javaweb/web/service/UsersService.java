@@ -6,6 +6,7 @@ import com.javaweb.web.entity.Users;
 import com.javaweb.web.repository.UsersRepo;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,6 +31,9 @@ public class UsersService {
         }
         if (userRepo.existsByEmail(user.getEmail())) {
             throw new RuntimeException("Email đã tồn tại");
+        }
+        if (isValidEmail(user.getEmail())) {
+            throw new RuntimeException("Định dạng email lỗi");
         }
         if (user.getPassword().length() < 6) {
             throw new BadRequestException("Mật khẩu quá ngắn");
@@ -114,5 +118,11 @@ public class UsersService {
     public Users getUserByUsername(String username) {
         // Tìm theo email trước
         return userRepo.findUserByName(username);
+    }
+    public static boolean isValidEmail(String email) {
+        // create the EmailValidator instance
+        EmailValidator validator = EmailValidator.getInstance();
+        // check for valid email addresses using isValid method
+        return validator.isValid(email);
     }
 }
