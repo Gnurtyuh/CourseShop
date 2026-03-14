@@ -43,8 +43,6 @@ public class RegisterTest extends BaseTest {
                 {"testuser", "invalid-email", "123456@Abc"}
         };
     }
-
-    // TC-REG-001: Đăng ký thành công
     @Test(dataProvider = "successfulRegistrationData", priority = 1)
     public void testSuccessfulRegistration(String name, String email, String password) {
 

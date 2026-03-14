@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const sectionTitle = document.createElement("h3");
       sectionTitle.textContent =
-          section.sectionTitle
+          section.sectionTitle||
           "Không có tiêu đề";
 
       const lessonList = document.createElement("ul");
@@ -289,7 +289,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           e.preventDefault();
 
           if (!user || !token) {
-            showNotification("Vui lòng đăng nhập để mua khóa học!", true);
+            alert("Vui lòng đăng nhập để mua khóa học!", true);
             setTimeout(() => window.location.href = "login", 1500);
             return;
           }
@@ -311,7 +311,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const result = await resPurchase.text();
 
-            if (result === "ok") {
+            if (result === "Ghi danh thành công.") {
               showNotification("Mua khóa học thành công!");
 
               // Cập nhật lại user trong localStorage
@@ -321,14 +321,12 @@ document.addEventListener("DOMContentLoaded", async () => {
               localStorage.setItem("user", JSON.stringify(updatedUser));
 
               // Reload trang sau 1.5 giây để cập nhật giao diện
-              setTimeout(() => window.location.reload(), 1500);
-            } else if (result === "insufficient_balance") {
-              showNotification("Số dư không đủ! Vui lòng nạp thêm tiền.", true);
-              newBtnBuyCourse.disabled = false;
-              newBtnBuyCourse.textContent = "Mua khóa học";
-              newBtnBuyCourse.style.opacity = "1";
+              setTimeout(() => window.location.reload(), 2000);
+            } else if (result === "Đã ghi danh rồi.") {
+              showNotification("Bạn đã mua khóa học này rồi!");
+              setTimeout(() => window.location.reload(), 2000);
             } else {
-              showNotification("Bạn đã mua khóa học này rồi!", true);
+              showNotification("Số dư không đủ! Vui lòng nạp thêm tiền.", true);
               newBtnBuyCourse.disabled = false;
               newBtnBuyCourse.textContent = "Mua khóa học";
               newBtnBuyCourse.style.opacity = "1";

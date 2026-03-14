@@ -47,7 +47,7 @@ public class PaymentController {
         try {
             Users user = usersService.getUserByName(userDetails.getUsername());
             String message = enrollmentService.enroll(user.getId(), courseId);
-            return ResponseEntity.ok("ok");
+            return ResponseEntity.ok(message);
         } catch (Exception e) {
             return ResponseEntity.ok("no");
         }
