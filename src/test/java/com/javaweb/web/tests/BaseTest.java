@@ -19,7 +19,7 @@ public class BaseTest {
     protected WebDriverWait wait;
     protected static final String BASE_URL = "http://localhost:8080/";
     protected static final String REGISTER_PAGE ="http://localhost:8080/register";
-
+    protected static final String COURSE_PAGE = "http://localhost:8080/course?id=";
 @BeforeMethod
 public void setup() {
 
