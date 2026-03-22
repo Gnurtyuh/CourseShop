@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Lấy courseId từ URL
   const urlParams = new URLSearchParams(window.location.search);
-  const courseId = urlParams.get("courseId");
+  const courseId = urlParams.get("id") || urlParams.get("courseId");
 
   async function fetchCourse(url) {
     try {
@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const sections = await fetchCourse(`http://localhost:8080/api/users/courseSection/by-course/${courseId}`);
 
-      if (!sections.length) {
+      if (!sections || sections.length === 0) {
         lessonsList.innerHTML = "<li>Khóa học chưa có chương nào.</li>";
         return;
       }
@@ -313,9 +313,12 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
 
       console.error("Lỗi khi tải dữ liệu khóa học:", err);
-      alert("Không thể tải dữ liệu khóa học. Vui lòng thử lại.");
-      window.location.href = "course";
 
+      showNotification("Không thể tải thông tin khóa học!", true);
+
+      setTimeout(() => {
+        window.location.href = "course";
+      }, 1500);
     }
   }
 

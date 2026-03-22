@@ -557,86 +557,86 @@
   </style>
 </head>
 <body>
-  <header>
-    <a href="index" class="logo">
-      <img src="/image/logo-removebg-preview.png" alt="5NT Learning Logo" loading="lazy" />
-    </a>
-    <nav>
-      <div class="menu-search">
-        <div class="search-box">
-          <input
-            type="text"
-            placeholder="Tìm kiếm khóa học, giảng viên..."
-            id="search-input"
-          />
-          <button id="search-btn" aria-label="Search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </div>
+<header>
+  <a href="index" class="logo">
+    <img src="/image/logo-removebg-preview.png" alt="5NT Learning Logo" loading="lazy" />
+  </a>
+  <nav>
+    <div class="menu-search">
+      <div class="search-box">
+        <input
+                type="text"
+                placeholder="Tìm kiếm khóa học, giảng viên..."
+                id="search-input"
+        />
+        <button id="search-btn" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </div>
-    </nav>
-    <div class="auth-buttons" id="auth-buttons">
-      <a href="login" id="btn-login">Đăng nhập</a>
-      <a href="register" id="btn-register">Đăng ký</a>
     </div>
-    <div class="user-menu" id="user-menu" style="display:none;">
-      <span id="user-name">User</span>
+  </nav>
+  <div class="auth-buttons" id="auth-buttons">
+    <a href="login" id="btn-login">Đăng nhập</a>
+    <a href="register" id="btn-register">Đăng ký</a>
+  </div>
+  <div class="user-menu" id="user-menu" style="display:none;">
+    <span id="user-name">User</span>
+    <ul>
+      <li><a href="profile" id="profile-link">Thông tin cá nhân</a></li>
+      <li><a href="topup" id="topup-link">Nạp tiền</a></li>
+      <li><a href="my-courses" id="my-courses-link">Khóa học của tôi</a></li>
+      <li><a href="contact" id="contact-link">Liên hệ với chúng tôi</a></li>
+      <li><a href="topup-guide" id="topup-guide-link">Hướng dẫn nạp tiền</a></li>
+      <li><a href="#" id="logout-btn">Đăng xuất</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="course-detail-container">
+  <section id="course-detail">
+    <h1 id="course-title">Đang tải...</h1>
+    <!--      <img id="course-image" src="" alt="Ảnh khóa học" />-->
+    <p id="course-description"></p>
+    <p><strong>Giảng viên:</strong> <span id="course-instructor"></span></p>
+    <p><strong>Giá:</strong> <span id="course-price"></span> VNĐ</p>
+    <button id="btn-buy-course">Mua khóa học</button>
+  </section>
+
+  <section id="course-lessons">
+    <h2>Danh sách bài học</h2>
+    <div id="section-list"></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3>Về 5NT Learning</h3>
+      <p>Nền tảng học trực tuyến cung cấp các khóa học chất lượng, giúp bạn phát triển kỹ năng và nâng cao sự nghiệp.</p>
+    </div>
+    <div class="footer-column">
+      <h3>Liên kết nhanh</h3>
       <ul>
-        <li><a href="profile" id="profile-link">Thông tin cá nhân</a></li>
-        <li><a href="topup" id="topup-link">Nạp tiền</a></li>
-        <li><a href="my-courses" id="my-courses-link">Khóa học của tôi</a></li>
-        <li><a href="contact" id="contact-link">Liên hệ với chúng tôi</a></li>
-        <li><a href="topup-guide" id="topup-guide-link">Hướng dẫn nạp tiền</a></li>
-        <li><a href="#" id="logout-btn">Đăng xuất</a></li>
+        <li><a href="index">Trang chủ</a></li>
+        <li><a href="course">Khóa học</a></li>
+        <li><a href="about">Giới thiệu</a></li>
+        <li><a href="contact">Liên hệ</a></li>
       </ul>
     </div>
-  </header>
-
-  <main class="course-detail-container">
-    <section id="course-detail">
-      <h1 id="course-title">Đang tải...</h1>
-<!--      <img id="course-image" src="" alt="Ảnh khóa học" />-->
-      <p id="course-description"></p>
-      <p><strong>Giảng viên:</strong> <span id="course-instructor"></span></p>
-      <p><strong>Giá:</strong> <span id="course-price"></span> VNĐ</p>
-      <button id="btn-buy-course">Mua khóa học</button>
-    </section>
-
-    <section id="course-lessons">
-      <h2>Danh sách bài học</h2>
-      <div id="section-list"></div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-column">
-        <h3>Về 5NT Learning</h3>
-        <p>Nền tảng học trực tuyến cung cấp các khóa học chất lượng, giúp bạn phát triển kỹ năng và nâng cao sự nghiệp.</p>
-      </div>
-      <div class="footer-column">
-        <h3>Liên kết nhanh</h3>
-        <ul>
-          <li><a href="index">Trang chủ</a></li>
-          <li><a href="course">Khóa học</a></li>
-          <li><a href="about">Giới thiệu</a></li>
-          <li><a href="contact">Liên hệ</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Thông tin liên hệ</h3>
-        <p>Email: <a href="mailto:support@5ntlearning.vn">support@5ntlearning.vn</a></p>
-        <p>Hotline: <a href="tel:0123456789">0123 456 789</a></p>
-        <p>Địa chỉ: Số 10, Đường Lập Trình, Quận Code, Hà Nội</p>
-      </div>
+    <div class="footer-column">
+      <h3>Thông tin liên hệ</h3>
+      <p>Email: <a href="mailto:support@5ntlearning.vn">support@5ntlearning.vn</a></p>
+      <p>Hotline: <a href="tel:0123456789">0123 456 789</a></p>
+      <p>Địa chỉ: Số 10, Đường Lập Trình, Quận Code, Hà Nội</p>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 5NT Learning. Đã đăng ký bản quyền.</p>
-    </div>
-  </footer>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 5NT Learning. Đã đăng ký bản quyền.</p>
+  </div>
+</footer>
 
-  <div id="notification"></div>
+<div id="notification"></div>
 
-  <script src="/js/course.js" defer></script>
+<script src="/js/course.js" defer></script>
 </body>
 </html>

@@ -178,30 +178,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     sectionList.innerHTML = "";
+
     data.forEach(section => {
+
+      // 👉 FIX: nếu không có lesson → bỏ luôn section này
+      if (!section.lessons || section.lessons.length === 0) {
+        return;
+      }
+
       const sectionDiv = document.createElement("div");
       sectionDiv.className = "course-section";
 
       const sectionTitle = document.createElement("h3");
       sectionTitle.textContent =
-          section.sectionTitle||
-          "Không có tiêu đề";
+          section.sectionTitle || "Không có tiêu đề"; // fix bug
 
       const lessonList = document.createElement("ul");
 
-      if (section.lessons && section.lessons.length > 0) {
-        section.lessons.forEach(lesson => {
-          const li = document.createElement("li");
-          li.textContent = lesson.title || "Bài học không có tiêu đề";
-          lessonList.appendChild(li);
-        });
-      } else {
+      section.lessons.forEach(lesson => {
         const li = document.createElement("li");
-        li.textContent = "Chưa có bài học nào trong phần này";
-        li.style.fontStyle = "italic";
-        li.style.color = "#6b7280";
+        li.textContent = lesson.title || "Bài học không có tiêu đề";
         lessonList.appendChild(li);
-      }
+      });
 
       sectionDiv.appendChild(sectionTitle);
       sectionDiv.appendChild(lessonList);
@@ -311,7 +309,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const result = await resPurchase.text();
 
-            if (result === "Ghi danh thành công.") {
+            if (result === "success") {
               showNotification("Mua khóa học thành công!");
 
               // Cập nhật lại user trong localStorage
@@ -322,7 +320,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
               // Reload trang sau 1.5 giây để cập nhật giao diện
               setTimeout(() => window.location.reload(), 2000);
-            } else if (result === "Đã ghi danh rồi.") {
+            } else if (result === "exits") {
               showNotification("Bạn đã mua khóa học này rồi!");
               setTimeout(() => window.location.reload(), 2000);
             } else {

@@ -52,16 +52,24 @@ public class CoursesController {
         }
     }
     @GetMapping("/me/{id}")
-    public ResponseEntity<?> getById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<?> getById(@PathVariable int id,
+                                     @AuthenticationPrincipal UserDetails userDetails) {
         try {
             Users user = usersService.getUserByName(userDetails.getUsername());
+
             accessService.checkAccessToCourse(user.getId(), id);
+
             Courses course = courseService.getCourseById(id);
+
             return ResponseEntity.ok(course);
+
         } catch (AccessDeniedException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("Bạn không có quyền truy cập khóa học này.");
+
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy bài học.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Không tìm thấy khóa học.");
         }
     }
 }

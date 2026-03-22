@@ -20,8 +20,9 @@ public class BaseTest {
     protected static final String BASE_URL = "http://localhost:8080/";
     protected static final String REGISTER_PAGE ="http://localhost:8080/register";
     protected static final String COURSE_PAGE = "http://localhost:8080/course?id=";
-@BeforeMethod
-public void setup() {
+
+    @BeforeMethod
+    public void setUp() {
 
     System.setProperty("webdriver.gecko.driver", "D:\\geckodriver-v0.36.0-win64\\geckodriver.exe");
 
@@ -33,7 +34,7 @@ public void setup() {
 
     wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-}
+    }
     protected void step(int number, String message) {
         System.out.println("STEP " + number + ": " + message);
     }
@@ -55,21 +56,15 @@ public void setup() {
 
         System.out.println("LocalStorage [" + key + "] = " + value);
     }
-//    @AfterMethod
-//    public void tearDown() {
-//        if (driver != null) {
-//
-//            driver.quit();
-//        }
-//    }
-@AfterMethod
-public void tearDown() throws InterruptedException {
-    Thread.sleep(8000);
 
-    if (driver != null) {
-        driver.quit();
+    @AfterMethod
+    public void tearDown() throws InterruptedException {
+        Thread.sleep(8000);
+
+        if (driver != null) {
+            driver.quit();
+        }
     }
-}
     protected void enterRegistrationData(String username, String email, String password) {
         WebElement usernameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
         WebElement emailField = driver.findElement(By.id("email"));

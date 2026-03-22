@@ -39,7 +39,7 @@ public class UsersService {
         if (!isValidEmail(user.getEmail())) {
             throw new BadRequestException("Định dạng email bị lỗi");
         }
-        if (!user.getName().matches("^[A-Za-zÀ-ỹ\\s]+$")) {
+        if (!user.getName().matches("^[A-Za-zÀ-ỹ0-9]+$")) {
             throw new BadRequestException("Tên không hợp lệ");
         }
         if (user.getPassword().length() < 6) {

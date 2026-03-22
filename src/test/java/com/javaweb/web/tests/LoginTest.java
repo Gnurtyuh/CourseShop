@@ -12,7 +12,7 @@ import static org.codehaus.groovy.runtime.DefaultGroovyMethods.step;
 
 public class LoginTest extends BaseTest {
     @Test
-    public void TC_LOG_01_LoginSuccess() {
+    public void TC_LOG_01() {
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
         logUrl();
@@ -61,7 +61,7 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(driver.getCurrentUrl().contains("index"));
     }
     @Test
-    public void TC_LOG_02_WrongPassword() {
+    public void TC_LOG_02() {
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
         System.out.println("Current URL: " + driver.getCurrentUrl());
@@ -109,7 +109,7 @@ public class LoginTest extends BaseTest {
         step(7, "Test completed");
     }
     @Test
-    public void TC_LOG_03_UserNotExist() {
+    public void TC_LOG_03() {
 
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
@@ -139,7 +139,7 @@ public class LoginTest extends BaseTest {
         step(6, "Test completed");
     }
     @Test
-    public void TC_LOG_04_EmptyName() {
+    public void TC_LOG_04() {
 
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
@@ -162,7 +162,7 @@ public class LoginTest extends BaseTest {
         Assert.assertFalse(message.isEmpty());
     }
     @Test
-    public void TC_LOG_05_EmptyPassword() {
+    public void TC_LOG_05() {
 
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
@@ -187,7 +187,7 @@ public class LoginTest extends BaseTest {
         Assert.assertFalse(message.isEmpty());
     }
     @Test
-    public void TC_LOG_06_EmptyAll() {
+    public void TC_LOG_06() {
 
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
@@ -207,7 +207,7 @@ public class LoginTest extends BaseTest {
         Assert.assertFalse(message.isEmpty());
     }
     @Test
-    public void TC_LOG_07_UsernameWithSpaces() {
+    public void TC_LOG_07() {
 
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
@@ -236,7 +236,7 @@ public class LoginTest extends BaseTest {
 //        alert.accept();
     }
     @Test
-    public void TC_LOG_08_SQLInjection()  {
+    public void TC_LOG_08()  {
 
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
@@ -265,7 +265,7 @@ public class LoginTest extends BaseTest {
         alert.accept();
     }
     @Test
-    public void TC_LOG_09_UsernameTooLong() {
+    public void TC_LOG_09() {
 
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
@@ -295,7 +295,7 @@ public class LoginTest extends BaseTest {
 //        alert.accept();
     }
     @Test
-    public void TC_LOG_10_PasswordTooLong() {
+    public void TC_LOG_10() {
 
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
@@ -326,7 +326,7 @@ public class LoginTest extends BaseTest {
         alert.accept();
     }
     @Test
-    public void TC_LOG_11_ServerDown() {
+    public void TC_LOG_11() {
 
         step(1, "Open login page");
         driver.get(BASE_URL + "login");
@@ -355,7 +355,7 @@ public class LoginTest extends BaseTest {
         alert.accept();
     }
     @Test
-    public void TC_LOG_12_PasswordWithSpaces() {
+    public void TC_LOG_12() {
 
         step(1, "Open login page");
         driver.get(BASE_URL + "login");

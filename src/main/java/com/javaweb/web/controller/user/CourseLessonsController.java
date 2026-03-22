@@ -1,6 +1,7 @@
 package com.javaweb.web.controller.user;
 
 import com.javaweb.web.entity.CourseLessons;
+import com.javaweb.web.entity.CourseSections;
 import com.javaweb.web.entity.Courses;
 import com.javaweb.web.entity.Users;
 import com.javaweb.web.service.AccessService;
@@ -17,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,6 +32,12 @@ public class CourseLessonsController {
     UsersService usersService;
     @Autowired
     AccessService accessService;
+
+    @GetMapping("/courseLesson/fakenull/findAll")
+    public List<CourseLessons> emptyLessons() {
+        return new ArrayList<>();
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable int id, @AuthenticationPrincipal UserDetails userDetails) {

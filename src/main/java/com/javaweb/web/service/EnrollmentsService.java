@@ -47,7 +47,7 @@ public class EnrollmentsService {
     }
     public String enroll(int userId, int courseId) {
         if (enrollmentsRepo.existsByUserIdAndCourseId(userId, courseId)) {
-            return "Đã ghi danh rồi.";
+            return "exits";
         }
 
         Courses course = courseRepo.findById(courseId).orElseThrow();
@@ -57,6 +57,6 @@ public class EnrollmentsService {
         e.setUser(userRepo.getReferenceById(userId));
         e.setCourse(course);
         enrollmentsRepo.save(e);
-        return "Ghi danh thành công.";
+        return "success";
     }
 }

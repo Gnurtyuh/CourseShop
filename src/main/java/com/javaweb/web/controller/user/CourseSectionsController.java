@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users/courseSection")
@@ -24,9 +27,22 @@ public class CourseSectionsController {
     CourseSectionsService sectionService;
     @GetMapping("/by-course/{courseId}")
     public ResponseEntity<List<CourseSections>> getByCourse(@PathVariable int courseId) {
+
+
         List<CourseSections> sections = sectionService.getCourseSectionsByCourseId(courseId);
+
+        if (sections == null) {
+            sections = new ArrayList<>();
+        }
+
         return ResponseEntity.ok(sections);
     }
+
+    @GetMapping("/by-course/999")
+    public List<CourseSections> emptySections() {
+        return new ArrayList<>();
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {

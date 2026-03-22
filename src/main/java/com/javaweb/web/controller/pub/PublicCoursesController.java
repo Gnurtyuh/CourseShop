@@ -30,24 +30,25 @@ public class PublicCoursesController {
     @Autowired
     UsersService usersService;
 
-    //testview3
-    @GetMapping("/status500")
-    public ResponseEntity<?> getCourses(){
-        return ResponseEntity.status(500).body("Server error");
-    }
-
-    //testview1
     @GetMapping
-    public ResponseEntity<List<Courses>> getAll() {
+    public ResponseEntity<?> getAllCourses(
+            @RequestParam(value = "mode", required = false) String mode
+    ) {
+
+        // 👉 TEST MODE: empty
+        if ("empty".equals(mode)) {
+            return ResponseEntity.ok(Collections.emptyList());
+        }
+
+        // 👉 TEST MODE: error
+        if ("error".equals(mode)) {
+            return ResponseEntity.status(500).body("Server error");
+        }
+
+        // 👉 NORMAL
         List<Courses> courses = courseService.getAllCourses();
         return ResponseEntity.ok(courses);
     }
-
-    @GetMapping("/empty")
-    public ResponseEntity<List<Courses>> getEmptyCourses() {
-        return ResponseEntity.ok(Collections.emptyList());
-    }
-
 
     @GetMapping("/MyCourse")
     public ResponseEntity<List<Courses>> getMyCourse(@AuthenticationPrincipal UserDetails userDetails) {
@@ -55,6 +56,7 @@ public class PublicCoursesController {
         List<Courses> courses= enrollmentsService.getCoursesByUserId(user.getId());
         return ResponseEntity.ok(courses);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable int id) {
         try {

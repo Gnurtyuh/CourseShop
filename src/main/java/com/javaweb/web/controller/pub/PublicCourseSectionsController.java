@@ -47,9 +47,23 @@ public class PublicCourseSectionsController {
     }
     @GetMapping("/by-course/{courseId}")
     public List<Map<String, Object>> getSectionsWithLessons(@PathVariable int courseId) {
+
+        // 👉 CASE TEST
+        if (courseId == 15) {
+            List<Map<String, Object>> response = new ArrayList<>();
+
+            Map<String, Object> sectionMap = new HashMap<>();
+            sectionMap.put("sectionTitle", "Section test");
+
+            // QUAN TRỌNG: lessons rỗng
+            sectionMap.put("lessons", new ArrayList<>());
+
+            response.add(sectionMap);
+            return response;
+        }
+
+        // 👉 logic bình thường
         List<CourseSections> sections = sectionService.getCourseSectionsByCourseId(courseId);
-
-
         List<Map<String, Object>> response = new ArrayList<>();
 
         for (CourseSections section : sections) {
@@ -58,14 +72,17 @@ public class PublicCourseSectionsController {
 
             List<Map<String, Object>> lessonsForSection = new ArrayList<>();
             List<CourseLessons> allLessons = lessonService.getCoursesLessonBySectionId(section.getId());
+
             for (CourseLessons lesson : allLessons) {
-                    Map<String, Object> lessonMap = new HashMap<>();
-                    lessonMap.put("title", lesson.getTitle());
-                    lessonsForSection.add(lessonMap);
+                Map<String, Object> lessonMap = new HashMap<>();
+                lessonMap.put("title", lesson.getTitle());
+                lessonsForSection.add(lessonMap);
             }
+
             sectionMap.put("lessons", lessonsForSection);
             response.add(sectionMap);
         }
+
         return response;
     }
 }

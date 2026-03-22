@@ -10,8 +10,16 @@ let currentUser = null; // Thêm biến lưu thông tin user hiện tại
 async function fetchCourses() {
   const token = localStorage.getItem("userToken");
 
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get("mode");
+
+  let apiUrl = "http://localhost:8080/api/public/courses";
+  if (mode) {
+    apiUrl += `?mode=${mode}`;
+  }
+
   try {
-    const response = await fetch("http://localhost:8080/api/public/courses", {
+    const response = await fetch(apiUrl, {
       headers: token ? { "Authorization": `Bearer ${token}` } : {}
     });
 
@@ -19,18 +27,17 @@ async function fetchCourses() {
 
     courses = await response.json();
 
-    // Nếu đã đăng nhập, lấy danh sách khóa học đã mua
+    // 🔥 THIẾU ĐOẠN NÀY
     if (token) {
       await fetchMyCourses();
     }
 
-    // Khởi tạo showCount theo category
     const categories = [...new Set(courses.map(c => c.category || 'Khác'))];
     categories.forEach(cat => {
       if (!showCount[cat]) showCount[cat] = initialShow;
     });
 
-    renderCourses();
+    renderCourses(); // 🔥 QUAN TRỌNG NHẤT
 
   } catch (err) {
     console.error("Lỗi fetchCourses:", err);
@@ -95,7 +102,7 @@ function renderCourses(filteredCourses = null) {
   const data = filteredCourses || courses;
   if (!data || data.length === 0) {
     container.innerHTML =
-      "<p id='no-course-msg' style='text-align: center; padding: 20px;'>Không có khóa học nào.</p>";
+        "<p id='no-course-msg' style='text-align: center; padding: 20px;'>Không có khóa học nào.</p>";
     return;
   }
 
